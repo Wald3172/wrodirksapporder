@@ -7,6 +7,7 @@ const path = require('path');
 
 const sendMailSlowReservation = async (req, res) => {
     const { app_name } = req.body; 
+    const user = '';
 
     let conn;
 
@@ -63,6 +64,9 @@ const sendMailSlowReservation = async (req, res) => {
             cc: cc,
             subject: subject,
             template: app_name,
+            context: {
+                user: user
+            }
         };
 
         const title = 'WRO Dirks App | Order';

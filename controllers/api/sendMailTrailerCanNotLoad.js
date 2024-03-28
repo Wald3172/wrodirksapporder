@@ -8,7 +8,7 @@ const sendMailTrailerCanNotLoad = async (req, res) => {
     const { app_name, date, cot, tdf, trailer, checkbox31, checkbox32, checkbox33, text30 } = req.body; 
     const user = '';
     const title = 'WRO Dirks App | Zgłaszanie naczep/SB';
-    const pageHeader = "Zgłaszanie naczep/SB";
+    const pageHeader = 'Zgłaszanie naczep/SB';
     const breadcrumbs = [
         {
             name: 'Order Management',
@@ -91,7 +91,8 @@ const sendMailTrailerCanNotLoad = async (req, res) => {
                 text30: text30,
                 checkbox31: checkbox31,
                 checkbox32: checkbox32,
-                checkbox33: checkbox33
+                checkbox33: checkbox33,
+                user: user
             }
         };
         

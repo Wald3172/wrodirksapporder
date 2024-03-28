@@ -8,7 +8,7 @@ const sendMailSBNotPrepared = async (req, res) => {
     const { app_name, date, cot, trailer, checkbox41, text40 } = req.body; 
     const user = '';
     const title = 'WRO Dirks App | Zgłaszanie naczep/SB';
-    const pageHeader = "Zgłaszanie naczep/SB";
+    const pageHeader = 'Zgłaszanie naczep/SB';
     const breadcrumbs = [
         {
             name: 'Order Management',
@@ -82,7 +82,8 @@ const sendMailSBNotPrepared = async (req, res) => {
                 date: date,
                 trailer: trailer,
                 text: text40,
-                checkbox: checkbox41
+                checkbox: checkbox41,
+                user: user
             }
         };
         

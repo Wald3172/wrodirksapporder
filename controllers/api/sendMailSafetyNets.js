@@ -7,7 +7,7 @@ const path = require('path');
 
 const sendMailSafetyNets = async (req, res) => {
     const { app_name } = req.body; 
-    const title = 'WRO Dirks App | Order';
+    const title = "WRO Dirks App | Order";
     const pageHeader = "Order Management";
     const user = "";
 

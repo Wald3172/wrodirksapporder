@@ -8,7 +8,7 @@ const sendMailSBCanNotLoad = async (req, res) => {
     const { app_name, date, cot, trailer, checkbox61, checkbox62, checkbox63, text60 } = req.body; 
     const user = '';
     const title = 'WRO Dirks App | Zgłaszanie naczep/SB';
-    const pageHeader = "Zgłaszanie naczep/SB";
+    const pageHeader = 'Zgłaszanie naczep/SB';
     const breadcrumbs = [
         {
             name: 'Order Management',
@@ -92,7 +92,8 @@ const sendMailSBCanNotLoad = async (req, res) => {
                 text60: text60,
                 checkbox61: checkbox61,
                 checkbox62: checkbox62,
-                checkbox63: checkbox63
+                checkbox63: checkbox63,
+                user: user
             }
         };
 

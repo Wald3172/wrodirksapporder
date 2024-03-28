@@ -7,8 +7,9 @@ const path = require('path');
 
 const sendMailKamagSupport = async (req, res) => {
     const { app_name } = req.body; 
-    const title = 'WRO Dirks App | Order';
+    const title = "WRO Dirks App | Order";
     const pageHeader = "Order Management";
+    const user = "Vlad";
 
     let conn;
 
@@ -65,6 +66,9 @@ const sendMailKamagSupport = async (req, res) => {
             cc: cc,
             subject: subject,
             template: app_name,
+            context: {
+                user: user
+            }
         };
 
         transporter.sendMail(mailOptions, (error, info) => {

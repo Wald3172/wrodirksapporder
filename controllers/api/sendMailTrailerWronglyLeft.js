@@ -8,7 +8,7 @@ const sendMailTrailerWronglyLeft = async (req, res) => {
     const { app_name, date, cot, tdf, trailer, checkbox, checkbox2 } = req.body; 
     const user = '';
     const title = 'WRO Dirks App | Zgłaszanie naczep/SB';
-    const pageHeader = "Zgłaszanie naczep/SB";
+    const pageHeader = 'Zgłaszanie naczep/SB';
     const breadcrumbs = [
         {
             name: 'Order Management',
@@ -83,7 +83,8 @@ const sendMailTrailerWronglyLeft = async (req, res) => {
                 tdf: tdf,
                 trailer: trailer,
                 checkbox: checkbox,
-                checkbox2: checkbox2
+                checkbox2: checkbox2,
+                user: user
             }
         };
 

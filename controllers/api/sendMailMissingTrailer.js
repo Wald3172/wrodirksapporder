@@ -6,9 +6,9 @@ const path = require('path');
 
 const sendMailMissingTrailer = async (req, res) => {
     const { app_name, date, cot, tdf, trailer } = req.body; 
-    const user = '';
     const title = 'WRO Dirks App | Order';
-    const pageHeader = "Order Management";
+    const pageHeader = 'Order Management';
+    const user = '';
 
     let conn;
 
@@ -68,7 +68,8 @@ const sendMailMissingTrailer = async (req, res) => {
             context: {
                 date: date,
                 tdf: tdf,
-                trailer: trailer
+                trailer: trailer,
+                user: user
             }
         };
 

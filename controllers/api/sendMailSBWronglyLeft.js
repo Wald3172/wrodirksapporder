@@ -8,7 +8,7 @@ const sendMailSBWronglyLeft = async (req, res) => {
     const { app_name, date, cot, trailer, checkbox51, checkbox52 } = req.body; 
     const user = '';
     const title = 'WRO Dirks App | Zgłaszanie naczep/SB';
-    const pageHeader = "Zgłaszanie naczep/SB";
+    const pageHeader = 'Zgłaszanie naczep/SB';
     const breadcrumbs = [
         {
             name: 'Order Management',
@@ -81,7 +81,8 @@ const sendMailSBWronglyLeft = async (req, res) => {
                 date: date,
                 trailer: trailer,
                 checkbox: checkbox51,
-                checkbox2: checkbox52
+                checkbox2: checkbox52,
+                user: user
             }
         };
         

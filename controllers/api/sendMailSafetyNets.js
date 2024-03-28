@@ -9,6 +9,7 @@ const sendMailSafetyNets = async (req, res) => {
     const { app_name } = req.body; 
     const title = 'WRO Dirks App | Order';
     const pageHeader = "Order Management";
+    const user = "";
 
     let conn;
 
@@ -65,6 +66,9 @@ const sendMailSafetyNets = async (req, res) => {
             cc: cc,
             subject: subject,
             template: app_name,
+            context: {
+                user: user
+            }
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
@@ -75,7 +79,7 @@ const sendMailSafetyNets = async (req, res) => {
             } else {
             console.log('Email sent ---> ' + info.response);
             const successInfo = true;
-            res.render('order', {title, pageHeader, links, cotTrailer, successInfo});
+            res.render('order', {title, pageHeader, links, cotTrailer, successInfo, user});
             }
         });
 

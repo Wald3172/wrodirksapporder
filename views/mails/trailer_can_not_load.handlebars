@@ -27,13 +27,16 @@
         <p>{{text30}}</p>
     {{/if}}
     <p>Please repair/replace this trailer.</p>
-    <p style="color: rgb(31, 73, 125)">
-        <br>Kind regards
+    
+    <span style="color: rgb(31, 73, 125)"><br>Kind regards</span>    
+        {{#if user}}<br><br>{{user}}{{/if}} 
+    <span style="color: rgb(31, 73, 125)">
         <br>Order Management
         <br><br>DIRKS Polska Sp. zo.o.
         <br>ul. Wrocławska 36
         <br>Wojkowice, 55-020 Żórawina
         <br><br>tel: <a href="tel:+48717367730">+48 717 36 77 30</a>
-        <br>e-mail: <a href="mailto:order.wro@dirks-group.de">order.wro@dirks-group.de</a></p>
+        <br>e-mail: <a href="mailto:order.wro@dirks-group.de">order.wro@dirks-group.de</a>
+    </span>  
 </body>
 </html>

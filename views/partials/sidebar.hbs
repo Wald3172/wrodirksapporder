@@ -1,0 +1,11 @@
+	<div class="left-sidebar">
+		<div class="section-header">&mdash; Linki do plików &mdash;</div>
+		{{#each links}}
+		<a class="left-sidebar__link" href="{{this.href}}" target="_blank">
+			<div class="left-sidebar__img">
+				<img src="/icons/{{this.img}}.png" alt="img">
+			</div>
+			<p>{{this.app_name}}</p>
+		</a>
+		{{/each}}
+	</div>

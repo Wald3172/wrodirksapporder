@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+{{> header}} 
+{{> modal}}
+{{!-- nagłowek strony --}}
+<div class="container-fluid page-header">
+	<h3>{{pageHeader}}</h3>
+</div>
+<div class="container-fluid main-container container-height">
+	{{!-- linki do innych stron --}}
+	{{> sidebar}}
+	{{!-- narzędzia --}}
+	<div class="content">
+		<form class="modal-form" action="/order/selectCapacity" method="post">
+			<div class="row g-3 align-items-center">
+				<div class="col-auto">
+					<label for="inputPassword6" class="col-form-label">Data</label>
+				</div>
+				<div class="col-auto">
+					<input type="date" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="dateStart"
+					{{#if dateStart}}value = {{dateStart}}
+					{{else}}value = {{dateDefault}}
+					{{/if}}>
+				</div>
+				<div class="col-auto">
+					<button id="btnAction" type="submit" class="btn btn-primary col-auto">Załaduj dane</button>
+				</div>
+			</div>
+		</form>
+		<form class="modal-form mt25" action="/order/updateCapacity" method="post">
+			<div class="col-auto displayNone">
+				<input type="date" id="" class="form-control" aria-describedby="passwordHelpInline" name="date"
+					value="{{dateStart}}">
+			</div>
+			{{#if capacity}}
+			{{#each capacity}}
+			<div class="row g-3 align-items-center">
+				<div class="col-auto">
+					<label for="inputPassword6" class="col-form-label">Capacity</label>
+				</div>
+				<div class="col-1">
+					<input type="number" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="capacity" value="{{this.PC_qty}}">
+				</div>
+				<div class="col-auto">
+					<label for="inputPassword6" class="col-form-label">Procent, %</label>
+				</div>
+				<div class="col-1">
+					<input type="text" id="inputPassword6" class="form-control" aria-describedby="passwordHelpInline" name="percent" value="{{this.Percent_over}}">
+				</div>
+				<div class="col-auto">
+					<button id="btnAction" type="submit" class="btn btn-warning col-auto">Zapisz dane</button>
+				</div>
+			</div>
+			{{/each}}
+			{{/if}}
+		</form>
+	</div>
+</div>
+
+
+{{> footer}}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="/js/order.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,466 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+{{> header}} 
+{{> modal}}
+{{!-- nagłowek strony --}}
+<div class="container-fluid page-header">
+	<h3>{{pageHeader}}</h3>
+</div>
+<div class="container-fluid main-container container-height">
+	{{!-- linki do innych stron --}}
+	{{> sidebar}}
+	{{!-- narzędzia --}}
+	<div class="content">
+		<div class="section-header">&mdash; Problemy z naczepami &mdash;</div>
+		<div class="content__section">
+			<div class="content__item" data-bs-toggle="modal" data-bs-target="#modal-trailer_not_prepared" id="trailer_not_prepared">
+				<div class="content__item__img">
+					<img src="/icons/trailer.png" alt="img">
+				</div>
+				<p>Naczepa nie przygotowana do załadunku</p>
+			</div>
+			<div class="content__item" data-bs-toggle="modal" data-bs-target="#modal-trailer_wrongly_left" id="trailer_wrongly_left">
+				<div class="content__item__img">
+					<img src="/icons/trailer.png" alt="img">
+				</div>
+				<p>Naczepa błędnie zostawiona na placu</p>
+			</div>
+			<div class="content__item" data-bs-toggle="modal" data-bs-target="#modal-trailer_can_not_load" id="trailer_can_not_load">
+				<div class="content__item__img">
+					<img src="/icons/trailer.png" alt="img">
+				</div>
+				<p>Naczepa, której nie możemy ładować</p>
+			</div>
+		</div>
+		<div class="section-header mt25">&mdash; Problemy z kontenerami &mdash;</div>
+		<div class="content__section">
+			<div class="content__item" data-bs-toggle="modal" data-bs-target="#modal-sb_not_prepared" id="sb_not_prepared">
+				<div class="content__item__img">
+					<img src="/icons/sb.png" alt="img">
+				</div>
+				<p>Kontener nie przygotowany do załadunku</p>
+			</div>
+			<div class="content__item" data-bs-toggle="modal" data-bs-target="#modal-sb_wrongly_left" id="sb_wrongly_left">
+				<div class="content__item__img">
+					<img src="/icons/sb.png" alt="img">
+				</div>
+				<p>Kontener błędnie zostawiony na placu</p>
+			</div>
+			<div class="content__item" data-bs-toggle="modal" data-bs-target="#modal-sb_can_not_load" id="sb_can_not_load">
+				<div class="content__item__img">
+					<img src="/icons/sb.png" alt="img">
+				</div>
+				<p>Kontener, który nie możemy ładować</p>
+			</div>
+		</div>
+	</div>
+</div>
+	{{!-- modal windows --}}
+	{{!-- Naczepa nie przygotowana do załadunku --}}
+	<div class="modal fade" id="modal-trailer_not_prepared" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Naczepa nie przygotowana do załadunku</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/sendMailTrailerNotPrepared" method="post">
+					<div class="modal-body">
+						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
+						<div class="row">
+							<div class="mb-3 col-5">
+								<label for="date" class="form-label"><b>Data</b></label>
+								<input type="date" class="form-control report-date" aria-describedby="emailHelp" name="date" required>
+							</div>
+							<div class="mb-3 col-7">
+								<label for="cot" class="form-label"><b>COT</b></label>
+								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
+									{{#each cotTrailer}}
+									<option selected>{{this.cot_2}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="missing_trailer_tdf" class="form-label"><b>TDF</b></label>
+							<input type="text" class="form-control" id="missing_trailer_tdf" aria-describedby="emailHelp" name="tdf" maxlength="40" required>
+							<div id="emailHelp" class="form-text">* możesz wprowadzić tylko 1 TDF,  ograniczenie do 40 znaków</div>
+						</div>
+						<div class="mb-3">
+							<label for="missing_trailer_trailer" class="form-label"><b>Numer naczepy</b></label>
+							<input type="text" class="form-control" id="missing_trailer_trailer" aria-describedby="emailHelp" name="trailer" required>
+						</div>
+						<div class="row" style="align-items: center">
+							<div class="mb-2 col-10">
+								<b>Problem</b>
+							</div>
+							<div class="mb-2 col-2">
+								<b>Ilość</b>
+							</div>
+						</div>
+						<div class="row" style="align-items: center">
+							<div class="mb-1 col-10">
+								<label class="form-check-label" for="checkbox1">
+									Potrzebne przełożenie desek
+								</label>
+							</div>
+							<div class="mb-1 col-2">
+								<input type="text" class="form-control" id="text1" name="text1" aria-describedby="emailHelp">
+							</div>
+						</div>
+						<div class="row" style="align-items: center">
+							<div class="mb-1 col-10">
+								<label class="form-check-label" for="checkbox2">
+									Brak desek
+								</label>
+							</div>
+							<div class="mb-1 col-2">
+								<input type="text" class="form-control" id="text2" name="text2" aria-describedby="emailHelp">
+							</div>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox" name="checkbox">
+							<label class="form-check-label" for="checkbox">
+								Znajdują się pasy
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox4" name="checkbox4" onclick="toggle('input-add-option-1', 'checkbox4')">
+							<label class="form-check-label" for="checkbox4">
+								Inna opcja/komentarz
+							</label>
+						</div>
+						<div class="form-check displayNone mt-2" id="input-add-option-1">
+							<input class="col-12" type="text" class="form-control" id="text3" name="text3" aria-describedby="emailHelp" style="padding: 0 12px;">
+							<div id="emailHelp" class="form-text">* pole musi być wypełnione w języku angielskim</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{{!-- Naczepa błędnie zostawiona na placu --}}
+	<div class="modal fade" id="modal-trailer_wrongly_left" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Naczepa błędnie zostawiona na placu</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/sendMailTrailerWronglyLeft" method="post">
+					<div class="modal-body">
+						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
+						<div class="row">
+							<div class="mb-3 col-5">
+								<label for="date" class="form-label"><b>Data</b></label>
+								<input type="date" class="form-control report-date" aria-describedby="emailHelp" name="date" required>
+							</div>
+							<div class="mb-3 col-7">
+								<label for="cot" class="form-label"><b>COT</b></label>
+								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
+									{{#each cotTrailer}}
+									<option selected>{{this.cot_2}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="missing_trailer_tdf" class="form-label"><b>TDF</b></label>
+							<input type="text" class="form-control" id="missing_trailer_tdf" aria-describedby="emailHelp" name="tdf" maxlength="40">
+							<div id="emailHelp" class="form-text">* możesz wprowadzić tylko 1 TDF,  ograniczenie do 40 znaków</div>
+						</div>
+						<div class="mb-3">
+							<label for="missing_trailer_trailer" class="form-label"><b>Numer naczepy</b></label>
+							<input type="text" class="form-control" id="missing_trailer_trailer" aria-describedby="emailHelp" name="trailer" required>
+						</div>
+						<div class="row mb-2" style="align-items: center">
+							<b>Problem</b>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox" name="checkbox">
+							<label class="form-check-label" for="checkbox">
+								Niedozwolone miejsce
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox2" name="checkbox2">
+							<label class="form-check-label" for="checkbox2">
+								Brak podkładów
+							</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{{!-- Naczepa, której nie możemy ładować --}}
+	<div class="modal fade" id="modal-trailer_can_not_load" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Naczepa, której nie możemy ładować</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/sendMailTrailerCanNotLoad" method="post">
+					<div class="modal-body">
+						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
+						<div class="row">
+							<div class="mb-3 col-5">
+								<label for="date" class="form-label"><b>Data</b></label>
+								<input type="date" class="form-control report-date" aria-describedby="emailHelp" name="date" required>
+							</div>
+							<div class="mb-3 col-7">
+								<label for="cot" class="form-label"><b>COT</b></label>
+								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
+									{{#each cotTrailer}}
+									<option selected>{{this.cot_2}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="missing_trailer_tdf" class="form-label"><b>TDF</b></label>
+							<input type="text" class="form-control" id="missing_trailer_tdf" aria-describedby="emailHelp" name="tdf" maxlength="40">
+							<div id="emailHelp" class="form-text">* możesz wprowadzić tylko 1 TDF,  ograniczenie do 40 znaków</div>
+						</div>
+						<div class="mb-3">
+							<label for="missing_trailer_trailer" class="form-label"><b>Numer naczepy</b></label>
+							<input type="text" class="form-control" aria-describedby="emailHelp" name="trailer" required>
+						</div>
+						<div class="row mb-2" style="align-items: center">
+							<b>Problem</b>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox31" name="checkbox31">
+							<label class="form-check-label" for="checkbox31">
+								Brudna
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox32" name="checkbox32">
+							<label class="form-check-label" for="checkbox32">
+								Przecieka
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox33" name="checkbox33">
+							<label class="form-check-label" for="checkbox33">
+								Uszkodzona
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox34" name="checkbox34" onclick="toggle('input-add-option-3', 'checkbox34')">
+							<label class="form-check-label" for="checkbox34">
+								Inna opcja/komentarz
+							</label>
+						</div>
+						<div class="form-check displayNone mt-2" id="input-add-option-3">
+							<input class="col-12" type="text" class="form-control" id="text30" name="text30" aria-describedby="emailHelp" style="padding: 0 12px;">
+							<div class="form-text">* pole musi być wypełnione w języku angielskim</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+  	{{!-- Kontener nie przygotowany do załadunku --}}
+	<div class="modal fade" id="modal-sb_not_prepared" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Kontener nie przygotowany do załadunku </h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/sendMailSBNotPrepared" method="post">
+					<div class="modal-body">
+						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
+						<div class="row">
+							<div class="mb-3 col-5">
+								<label for="date" class="form-label"><b>Data</b></label>
+								<input type="date" class="form-control report-date" aria-describedby="emailHelp" name="date" required>
+							</div>
+							<div class="mb-3 col-7">
+								<label for="cot" class="form-label"><b>COT</b></label>
+								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
+									{{#each cotSB}}
+									<option selected>{{this.cot_2}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="missing_trailer_trailer" class="form-label"><b>Numer kontenera</b></label>
+							<input type="text" class="form-control" id="missing_trailer_trailer" aria-describedby="emailHelp" name="trailer" required>
+						</div>
+						<div class="row mb-2" style="align-items: center">
+							<b>Problem</b>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox41" name="checkbox41">
+							<label class="form-check-label" for="checkbox41">
+								Nie posprzątany kontener
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox40" name="checkbox4" onclick="toggle('input-add-option-4', 'checkbox40')">
+							<label class="form-check-label" for="checkbox40">
+								Inna opcja/komentarz
+							</label>
+						</div>
+						<div class="form-check displayNone mt-2" id="input-add-option-4">
+							<input class="col-12" type="text" class="form-control" id="text40" name="text40" aria-describedby="emailHelp" style="padding: 0 12px;">
+							<div id="emailHelp" class="form-text">* pole musi być wypełnione w języku angielskim</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{{!-- Kontener błędnie zostawiony na placu --}}
+	<div class="modal fade" id="modal-sb_wrongly_left" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Kontener błędnie zostawiony na placu</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/sendMailSBWronglyLeft" method="post">
+					<div class="modal-body">
+						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
+						<div class="row">
+							<div class="mb-3 col-5">
+								<label for="date" class="form-label"><b>Data</b></label>
+								<input type="date" class="form-control report-date" aria-describedby="emailHelp" name="date" required>
+							</div>
+							<div class="mb-3 col-7">
+								<label for="cot" class="form-label"><b>COT</b></label>
+								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
+									{{#each cotSB}}
+									<option selected>{{this.cot_2}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="missing_trailer_trailer" class="form-label"><b>Numer kontenera</b></label>
+							<input type="text" class="form-control" id="missing_trailer_trailer" aria-describedby="emailHelp" name="trailer" required>
+						</div>
+						<div class="row mb-2" style="align-items: center">
+							<b>Problem</b>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox51" name="checkbox51">
+							<label class="form-check-label" for="checkbox51">
+								Niedozwolone miejsce
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox52" name="checkbox52">
+							<label class="form-check-label" for="checkbox52">
+								Brak podkładów
+							</label>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{{!-- Kontener, który nie możemy ładować --}}
+	<div class="modal fade" id="modal-sb_can_not_load" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Kontener, który nie możemy ładować</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/sendMailSBCanNotLoad" method="post">
+					<div class="modal-body">
+						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
+						<div class="row">
+							<div class="mb-3 col-5">
+								<label for="date" class="form-label"><b>Data</b></label>
+								<input type="date" class="form-control report-date" aria-describedby="emailHelp" name="date" required>
+							</div>
+							<div class="mb-3 col-7">
+								<label for="cot" class="form-label"><b>COT</b></label>
+								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
+									{{#each cotSB}}
+									<option selected>{{this.cot_2}}</option>
+									{{/each}}
+								</select>
+							</div>
+						</div>
+						<div class="mb-3">
+							<label for="missing_trailer_trailer" class="form-label"><b>Numer kontenera</b></label>
+							<input type="text" class="form-control" aria-describedby="emailHelp" name="trailer" required>
+						</div>
+						<div class="row mb-2" style="align-items: center">
+							<b>Problem</b>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox61" name="checkbox61">
+							<label class="form-check-label" for="checkbox61">
+								Brudny
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox62" name="checkbox62">
+							<label class="form-check-label" for="checkbox62">
+								Przecieka
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox63" name="checkbox63">
+							<label class="form-check-label" for="checkbox63">
+								Uszkodzony
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox34" name="checkbox64" onclick="toggle('input-add-option-6', 'checkbox64')">
+							<label class="form-check-label" for="checkbox64">
+								Inna opcja/komentarz
+							</label>
+						</div>
+						<div class="form-check displayNone mt-2" id="input-add-option-6">
+							<input class="col-12" type="text" class="form-control" id="text60" name="text30" aria-describedby="emailHelp" style="padding: 0 12px;">
+							<div class="form-text">* pole musi być wypełnione w języku angielskim</div>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+{{> footer}}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="/js/order.js"></script>
+
+</body>
+</html>

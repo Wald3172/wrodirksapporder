@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Dear all,</p>
+    <p>We noted that trailer <b>{{trailer}}</b> with TDF <b>{{tdf}}</b> not prepared for loading.</p>
+    <ul>
+        {{#if text1}}
+            <li>{{text1}} side board/boards needed to be repositioned/Our employees will have to spend time rearranging this board</li>
+        {{/if}}
+        {{#if text2}}
+            <li>{{text2}} missing side board/boards on the trailer/The parcels will be loaded with a maximum of one lay above the line, which is given by the highest row of boards</li>
+        {{/if}}
+        {{#if checkbox}}
+            <li>There are straps on the trailer/If belts have metal plaques, they can damage packages</li>
+        {{/if}}
+    </ul>
+    {{#if text3}}
+        <p>{{text3}}</p>
+    {{/if}}
+    <p>Please provide trailers prepared for loading.</p>
+    <p style="color: rgb(31, 73, 125)">
+        <br>Kind regards
+        <br>Order Management
+        <br><br>DIRKS Polska Sp. zo.o.
+        <br>ul. Wrocławska 36
+        <br>Wojkowice, 55-020 Żórawina
+        <br><br>tel: <a href="tel:+48717367730">+48 717 36 77 30</a>
+        <br>e-mail: <a href="mailto:order.wro@dirks-group.de">order.wro@dirks-group.de</a></p>
+</body>
+</html>

@@ -78,7 +78,7 @@
 								<label for="cot" class="form-label"><b>COT</b></label>
 								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
 									{{#each cotTrailer}}
-									<option selected>{{this.cot_2}}</option>
+									<option selected>{{this.cot}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -138,8 +138,9 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionTrailerNotPrepared" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionTrailerNotPrepared', 'btnDisabledTrailerNotPrepared')">Wyślij</button>
+						<button id="btnDisabledTrailerNotPrepared" type="submit" class="btn btn-primary displayNone" disabled>Wyślij</button>
 					</div>
 				</form>
 			</div>
@@ -165,7 +166,7 @@
 								<label for="cot" class="form-label"><b>COT</b></label>
 								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
 									{{#each cotTrailer}}
-									<option selected>{{this.cot_2}}</option>
+									<option selected>{{this.cot}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -194,10 +195,21 @@
 								Brak podkładów
 							</label>
 						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkboxTrailerWronglyLeft" name="checkboxTrailerWronglyLeft" onclick="toggle('input-add-TrailerWronglyLeft', 'checkboxTrailerWronglyLeft')">
+							<label class="form-check-label" for="checkboxTrailerWronglyLeft">
+								Inna opcja/komentarz
+							</label>
+						</div>
+						<div class="form-check displayNone mt-2" id="input-add-TrailerWronglyLeft">
+							<input class="col-12" type="text" class="form-control" id="textTrailerWronglyLeft" name="textTrailerWronglyLeft" aria-describedby="emailHelp" style="padding: 0 12px;">
+							<div id="emailHelp" class="form-text">* pole musi być wypełnione w języku angielskim</div>
+						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionTrailerWronglyLeft" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionTrailerWronglyLeft', 'btnDisabledTrailerWronglyLeft')">Wyślij</button>
+						<button id="btnDisabledTrailerWronglyLeft" type="submit" class="btn btn-primary displayNone" disabled>Wyślij</button>
 					</div>
 				</form>
 			</div>
@@ -223,7 +235,7 @@
 								<label for="cot" class="form-label"><b>COT</b></label>
 								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
 									{{#each cotTrailer}}
-									<option selected>{{this.cot_2}}</option>
+									<option selected>{{this.cot}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -270,8 +282,9 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionTrailerCanNotLoad" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionTrailerCanNotLoad', 'btnDisabledTrailerCanNotLoad')">Wyślij</button>
+						<button id="btnDisabledTrailerCanNotLoad" type="submit" class="btn btn-primary displayNone" disabled>Wyślij</button>
 					</div>
 				</form>
 			</div>
@@ -297,7 +310,7 @@
 								<label for="cot" class="form-label"><b>COT</b></label>
 								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
 									{{#each cotSB}}
-									<option selected>{{this.cot_2}}</option>
+									<option selected>{{this.cot}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -327,8 +340,9 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionSBNotPrepared" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionSBNotPrepared', 'btnDisabledSBNotPrepared')">Wyślij</button>
+						<button id="btnDisabledSBNotPrepared" type="submit" class="btn btn-primary displayNone" disabled>Wyślij</button>
 					</div>
 				</form>
 			</div>
@@ -354,7 +368,7 @@
 								<label for="cot" class="form-label"><b>COT</b></label>
 								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
 									{{#each cotSB}}
-									<option selected>{{this.cot_2}}</option>
+									<option selected>{{this.cot}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -378,10 +392,21 @@
 								Brak podkładów
 							</label>
 						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkboxSBWronglyLeft" name="checkboxSBWronglyLeft" onclick="toggle('input-add-SBWronglyLeft', 'checkboxSBWronglyLeft')">
+							<label class="form-check-label" for="checkboxSBWronglyLeft">
+								Inna opcja/komentarz
+							</label>
+						</div>
+						<div class="form-check displayNone mt-2" id="input-add-SBWronglyLeft">
+							<input class="col-12" type="text" class="form-control" id="textSBWronglyLeft" name="textSBWronglyLeft" aria-describedby="emailHelp" style="padding: 0 12px;">
+							<div id="emailHelp" class="form-text">* pole musi być wypełnione w języku angielskim</div>
+						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionSBWronglyLeft" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionSBWronglyLeft', 'btnDisabledSBWronglyLeft')">Wyślij</button>
+						<button id="btnDisabledSBWronglyLeft" type="submit" class="btn btn-primary displayNone" disabled>Wyślij</button>
 					</div>
 				</form>
 			</div>
@@ -407,7 +432,7 @@
 								<label for="cot" class="form-label"><b>COT</b></label>
 								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
 									{{#each cotSB}}
-									<option selected>{{this.cot_2}}</option>
+									<option selected>{{this.cot}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -438,19 +463,20 @@
 							</label>
 						</div>
 						<div class="form-check">
-							<input class="form-check-input" type="checkbox" value="checked" id="checkbox34" name="checkbox64" onclick="toggle('input-add-option-6', 'checkbox64')">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkbox64" name="checkbox64" onclick="toggle('input-add-option-6', 'checkbox64')">
 							<label class="form-check-label" for="checkbox64">
 								Inna opcja/komentarz
 							</label>
 						</div>
 						<div class="form-check displayNone mt-2" id="input-add-option-6">
-							<input class="col-12" type="text" class="form-control" id="text60" name="text30" aria-describedby="emailHelp" style="padding: 0 12px;">
-							<div class="form-text">* pole musi być wypełnione w języku angielskim</div>
+							<input class="col-12" type="text" class="form-control" id="text30" name="text30" aria-describedby="emailHelp" style="padding: 0 12px;">
+							<div id="emailHelp" class="form-text">* pole musi być wypełnione w języku angielskim</div>
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionSBCanNotLoad" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionSBCanNotLoad', 'btnDisabledSBCanNotLoad')">Wyślij</button>
+						<button id="btnDisabledSBCanNotLoad" type="submit" class="btn btn-primary displayNone" disabled>Wyślij</button>
 					</div>
 				</form>
 			</div>

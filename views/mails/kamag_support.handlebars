@@ -8,6 +8,9 @@
 <body>
     <p>Cześć,</p>
     <p>Proszę o wsparcie.</p>
+    {{#if commentSupportKamag}}
+    <p>{{commentSupportKamag}}</p>
+    {{/if}}
     
     <span style="color: rgb(31, 73, 125)"><br>Kind regards</span>    
         {{#if user}}<br><br>{{user}}{{/if}} 

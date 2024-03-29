@@ -15,6 +15,7 @@ const sendMailSBCanNotLoad = async (req, res) => {
             href: '/order'
         }
     ];
+    const hrefRedirect = '/order/zglaszanie_naczep_sb';
 
     let conn;
 
@@ -41,8 +42,8 @@ const sendMailSBCanNotLoad = async (req, res) => {
         const selectCc = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and cot = ? and param = 'cc'", [app_name, cot]);
 
         const links = await conn.query("SELECT app_name, href, img FROM apps WHERE app_type = 'link' order by priority");
-        const cotTrailer = await conn.query("SELECT DISTINCT cot_2 FROM list_of_cot WHERE sb='trailer'");
-        const cotSB = await conn.query("SELECT DISTINCT cot_2 FROM list_of_cot WHERE sb='container'");
+        const cotTrailer = await conn.query("SELECT DISTINCT cot FROM list_of_cot WHERE sb='trailer'");
+        const cotSB = await conn.query("SELECT DISTINCT cot FROM list_of_cot WHERE sb='container'");
 
         let to = [];
             cc = [];
@@ -93,7 +94,8 @@ const sendMailSBCanNotLoad = async (req, res) => {
                 checkbox61: checkbox61,
                 checkbox62: checkbox62,
                 checkbox63: checkbox63,
-                user: user
+                user: user,
+                hrefRedirect: hrefRedirect
             }
         };
 
@@ -101,18 +103,18 @@ const sendMailSBCanNotLoad = async (req, res) => {
             if (error) {
             console.log('Email error ---> ' + error);
             const errorInfo = error;
-            res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, errorInfo});
+            res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, errorInfo, hrefRedirect});
             } else {
             console.log('Email sent ---> ' + info.response);
             const successInfo = true;
-            res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, successInfo});
+            res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, successInfo, hrefRedirect});
             }
         });
 
     } catch (error) {
         console.log(error);
         const errorInfo = error;
-        res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, errorInfo});
+        res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, errorInfo, hrefRedirect});
     }
 }
 

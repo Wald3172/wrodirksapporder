@@ -84,8 +84,9 @@
 						<p class="modal-text">Czy na pewno chcesz wysłać mail?</p>
 					</div>
 					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Tak</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+						<button id="btnActionSafetyNetsHermes" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionSafetyNetsHermes', 'btnDisabledSafetyNetsHermes')">Tak</button>
+						<button id="btnDisabledSafetyNetsHermes" type="submit" class="btn btn-primary displayNone" disabled>Tak</button>
 					</div>
 				</form>
 			</div>
@@ -105,8 +106,9 @@
 						<p class="modal-text">Czy na pewno chcesz wysłać mail?</p>
 					</div>
 					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Tak</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+						<button id="btnActionSafetyNetsDHL" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionSafetyNetsDHL', 'btnDisabledSafetyNetsDHL')">Tak</button>
+						<button id="btnDisabledSafetyNetsDHL" type="submit" class="btn btn-primary displayNone" disabled>Tak</button>
 					</div>
 				</form>
 			</div>
@@ -123,11 +125,22 @@
 				<form class="modal-form" action="/api/sendMailKamagSupport" method="post">
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="kamag_support">
-						<p class="modal-text">Czy na pewno chcesz wysłać mail?</p>
+						<p class="modal-text">Cześć,</p>
+						<p class="modal-text">Proszę o wsparcie.</p>
+						<div class="form-check mt25">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkboxSupportKamag" name="checkboxSupportKamag" onclick="toggle('input-add-SupportKamag', 'checkboxSupportKamag')">
+							<label class="form-check-label" for="checkboxSupportKamag">
+								Komentarz
+							</label>
+						</div>
+						<div class="form-check displayNone mt-2" id="input-add-SupportKamag">
+							<input class="col-12" type="text" class="form-control" id="commentSupportKamag" name="commentSupportKamag" aria-describedby="emailHelp" style="padding: 0 12px;">
+						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Tak</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionSupportKamag" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionSupportKamag', 'btnDisabledSupportKamag')">Wyślij</button>
+						<button id="btnDisabledSupportKamag" type="submit" class="btn btn-primary displayNone" disabled>Wyślij</button>
 					</div>
 				</form>
 			</div>
@@ -144,11 +157,23 @@
 				<form class="modal-form" action="/api/sendMailSlowReservation" method="post">
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="slow_reservation">
-						<p class="modal-text">Czy na pewno chcesz wysłać mail?</p>
+						<p class="modal-text">Cześć,</p>
+						<p class="modal-text">W tej chwili jest wolna rezerwacja zleceń.</p>
+						<p class="modal-text">Proszę o sprawdzenie.</p>
+						<div class="form-check mt25">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkboxSlowReservation" name="checkboxSlowReservation" onclick="toggle('input-add-SlowReservation', 'checkboxSlowReservation')">
+							<label class="form-check-label" for="checkboxSlowReservation">
+								Komentarz
+							</label>
+						</div>
+						<div class="form-check displayNone mt-2" id="input-add-SlowReservation">
+							<input class="col-12" type="text" class="form-control" id="commentSlowReservation" name="commentSlowReservation" aria-describedby="emailHelp" style="padding: 0 12px;">
+						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Tak</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionSlowReservation" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionSlowReservation', 'btnDisabledSlowReservation')">Wyślij</button>
+						<button id="btnDisabledSlowReservation" type="submit" class="btn btn-primary displayNone" disabled>Wyślij</button>
 					</div>
 				</form>
 			</div>
@@ -174,7 +199,7 @@
 								<label for="cot" class="form-label"><b>COT</b></label>
 								<select class="form-select" aria-label="Default select example" id="cot" name="cot">
 									{{#each cotTrailer}}
-									<option selected>{{this.cot_2}}</option>
+									<option selected>{{this.cot}}</option>
 									{{/each}}
 								</select>
 							</div>
@@ -190,180 +215,14 @@
 						</div>
 					</div>
 					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionMissingTrailer" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionMissingTrailer', 'btnDisabledMissingTrailer')">Wyślij</button>
+						<button id="btnDisabledMissingTrailer" type="submit" class="btn btn-primary displayNone" disabled>Wyślij</button>
 					</div>
 				</form>
 			</div>
 		</div>
 	</div>
-
-  
-{{!-- <div class="container-xxl container-height">
-	<h3 class="page-header">{{pageHeader}}</h3>
-	<nav class="">
-		<div id="nav-all" class="navbar__item navbar__item-active" onclick="filterOff(id)">Wszystkie</div>
-		<div id="nav-order" class="navbar__item" onclick="filter(id)">Zlecenia</div>
-		<div id="nav-tr" class="navbar__item" onclick="filter(id)">Transporty</div>
-		<div id="nav-other" class="navbar__item" onclick="filter(id)">Inne</div>
-	</nav>
-
-	{{#if appsZlecenia}}
-	<div class="menu" id="menu-nav-order">
-		<h3 class="menu__header">
-			Zlecenia
-		</h3>
-		<div class="divider"></div>
-		<div class="menu__content">
-			{{#each appsZlecenia}}
-				{{#if this.href}}
-					<a href="{{this.href}}" class="menu__btn" id="{{this.id}}">
-					{{this.app_name}}
-					</a>
-				{{else}}
-					<button class="menu__btn" data-bs-toggle="modal" data-bs-target="#modalWindow{{this.id}}" id="{{this.id}}" onclick="openModal(id);">
-					{{this.app_name}}
-					</button>
-				{{/if}}
-			{{/each}}
-		</div>
-	</div>	
-	{{/if}}
-	{{#if appsTransporty}}
-	<div class="menu" id="menu-nav-tr">
-		<h3 class="menu__header">
-			Transporty
-		</h3>
-		<div class="divider"></div>
-		<div class="menu__content">
-			{{#each appsTransporty}}
-				{{#if this.href}}
-					<a href="{{this.href}}" class="menu__btn" id="{{this.id}}">
-					{{this.app_name}}
-					</a>
-				{{else}}
-					<button class="menu__btn" data-bs-toggle="modal" data-bs-target="#modalWindow{{this.id}}" id="{{this.id}}">
-					{{this.app_name}}
-					</button>
-				{{/if}}
-			{{/each}}
-		</div>
-	</div>	
-	{{/if}}	
-	{{#if appsInne}}
-	<div class="menu" id="menu-nav-other">
-		<h3 class="menu__header">
-			Inne	
-		</h3>
-		<div class="divider"></div>
-		<div class="menu__content">
-			{{#each appsInne}}
-				{{#if this.href}}
-					<a href="{{this.href}}" class="menu__btn" id="{{this.id}}">
-					{{this.app_name}}
-					</a>
-				{{else}}
-					<button class="menu__btn" data-bs-toggle="modal" data-bs-target="#modalWindow{{this.id}}" id="{{this.id}}" onclick="openModal(id);">
-					{{this.app_name}}
-					</button>
-				{{/if}}
-			{{/each}}
-		</div>
-	</div>
-	{{/if}}	
-	<!-- #1 - siatki hermes -->
-	<div class="modal fade" id="modalWindow1" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">Siatki Hermes</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<form class="modal-form" action="/api/sendMail" method="post">
-					<div class="modal-body">
-						<input class="displayNone" type="text" name="id" value="1">
-						<p class="modal-text">Czy na pewno chcesz wysłać mail?</p>
-					</div>
-					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Tak</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>	
-    <!-- #2 - siatki dhl -->
-	<div class="modal fade" id="modalWindow2" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">Siatki DHL</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<form class="modal-form" action="/api/sendMail" method="post">
-					<div class="modal-body">
-						<input class="displayNone" type="text" name="id" value="2">
-						<p class="modal-text">Czy na pewno chcesz wysłać mail?</p>
-					</div>
-					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Tak</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>	
-	<!-- #4 - zgłaszanie problemów z naczepami/sb -->
-	<div class="modal fade" id="modalWindow4" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">Zgłaszanie problemów z naczepami/SB</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<form class="modal-form" action="/api/sendMail" method="post">
-					<div class="modal-body">
-						<input class="displayNone" type="text" name="id" value="4">
-						
-					</div>
-					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>	
-	<!-- #5 - missing trailer -->
-	<div class="modal fade" id="modalWindow5" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
-		<div class="modal-dialog">
-			<div class="modal-content">
-				<div class="modal-header">
-					<h5 class="modal-title" id="staticBackdropLabel">Missing trailer</h5>
-					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-				</div>
-				<form class="modal-form" action="/api/sendMail" method="post">
-					<div class="modal-body">
-						<input class="displayNone" type="text" name="id" value="5">
-						<label class="form-label">Data</label>
-						<input type="date" name="date" class="form-control mb-2">
-						<label class="form-label">Kierunek</label>
-						<input type="text" name="cot" class="form-control mb-2">
-						<label class="form-label">TDF</label>
-						<input type="text" name="tdf" class="form-control mb-2">
-						<label class="form-label">Numer naczepy</label>
-						<input type="text" name="trailer" class="form-control mb-2">
-					</div>
-					<div class="modal-footer">
-						<button id="btnClose" type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
-						<button id="btnAction" type="submit" class="btn btn-primary">Wyślij</button>
-					</div>
-				</form>
-			</div>
-		</div>
-	</div>
-
-</div> --}}
 
 {{> footer}}
 

@@ -10,6 +10,7 @@ const sendMailSafetyNets = async (req, res) => {
     const title = "WRO Dirks App | Order";
     const pageHeader = "Order Management";
     const user = "";
+    const hrefRedirect = '/order';
 
     let conn;
 
@@ -21,8 +22,8 @@ const sendMailSafetyNets = async (req, res) => {
         const selectSubject = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'subject'", [app_name]);
 
         const links = await conn.query("SELECT app_name, href, img FROM apps WHERE app_type = 'link' order by priority");
-        const cotTrailer = await conn.query("SELECT DISTINCT cot_2 FROM list_of_cot WHERE sb='trailer'");
-        const cotSB = await conn.query("SELECT DISTINCT cot_2 FROM list_of_cot WHERE sb='container'");
+        const cotTrailer = await conn.query("SELECT DISTINCT cot FROM list_of_cot WHERE sb='trailer'");
+        const cotSB = await conn.query("SELECT DISTINCT cot FROM list_of_cot WHERE sb='container'");
 
 
         let to = [];
@@ -67,7 +68,8 @@ const sendMailSafetyNets = async (req, res) => {
             subject: subject,
             template: app_name,
             context: {
-                user: user
+                user: user,
+                hrefRedirect: hrefRedirect
             }
         };
 
@@ -75,18 +77,18 @@ const sendMailSafetyNets = async (req, res) => {
             if (error) {
             console.log('Email error ---> ' + error);
             const errorInfo = error;
-            res.render('order', {title, pageHeader, links, cotTrailer, errorInfo});
+            res.render('order', {title, pageHeader, links, cotTrailer, errorInfo, hrefRedirect});
             } else {
             console.log('Email sent ---> ' + info.response);
             const successInfo = true;
-            res.render('order', {title, pageHeader, links, cotTrailer, successInfo, user});
+            res.render('order', {title, pageHeader, links, cotTrailer, successInfo, user, hrefRedirect});
             }
         });
 
     } catch (error) {
         console.log(error);
         const errorInfo = error;
-        res.render('order', {title, pageHeader, links, cotTrailer, errorInfo});
+        res.render('order', {title, pageHeader, links, cotTrailer, errorInfo, hrefRedirect});
     }
 }
 

@@ -6,10 +6,11 @@ const hbs = require('nodemailer-express-handlebars');
 const path = require('path');
 
 const sendMailKamagSupport = async (req, res) => {
-    const { app_name } = req.body; 
+    const { app_name, commentSupportKamag } = req.body; 
     const title = "WRO Dirks App | Order";
     const pageHeader = "Order Management";
-    const user = "Vlad";
+    const user = "";
+    const hrefRedirect = '/order';
 
     let conn;
 
@@ -21,8 +22,8 @@ const sendMailKamagSupport = async (req, res) => {
         const selectSubject = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'subject'", [app_name]);
 
         const links = await conn.query("SELECT app_name, href, img FROM apps WHERE app_type = 'link' order by priority");
-        const cotTrailer = await conn.query("SELECT DISTINCT cot_2 FROM list_of_cot WHERE sb='trailer'");
-        const cotSB = await conn.query("SELECT DISTINCT cot_2 FROM list_of_cot WHERE sb='container'");
+        const cotTrailer = await conn.query("SELECT DISTINCT cot FROM list_of_cot WHERE sb='trailer'");
+        const cotSB = await conn.query("SELECT DISTINCT cot FROM list_of_cot WHERE sb='container'");
 
 
         let to = [];
@@ -67,7 +68,9 @@ const sendMailKamagSupport = async (req, res) => {
             subject: subject,
             template: app_name,
             context: {
-                user: user
+                user: user,
+                commentSupportKamag: commentSupportKamag,
+                hrefRedirect: hrefRedirect
             }
         };
 
@@ -75,18 +78,18 @@ const sendMailKamagSupport = async (req, res) => {
             if (error) {
             console.log('Email error ---> ' + error);
             const errorInfo = error;
-            res.render('order', {title, pageHeader, links, cotTrailer, errorInfo});
+            res.render('order', {title, pageHeader, links, cotTrailer, errorInfo, hrefRedirect});
             } else {
             console.log('Email sent ---> ' + info.response);
             const successInfo = true;
-            res.render('order', {title, pageHeader, links, cotTrailer, successInfo});
+            res.render('order', {title, pageHeader, links, cotTrailer, successInfo, hrefRedirect});
             }
         });
 
     } catch (error) {
         console.log(error);
         const errorInfo = error;
-        res.render('order', {title, pageHeader, links, cotTrailer, errorInfo});
+        res.render('order', {title, pageHeader, links, cotTrailer, errorInfo, hrefRedirect});
     }
 }
 

@@ -15,8 +15,6 @@ document.addEventListener('DOMContentLoaded', (event) => {
    });
   });
 
-
-
 function toggle(idElement, idCheckbox) {
     const element = document.getElementById(idElement);
     const checkbox = document.getElementById(idCheckbox);
@@ -32,4 +30,12 @@ function toggle(idElement, idCheckbox) {
 function closeModalInfo(id) {
     const modal = document.getElementById(id);
     modal.classList.remove('displayBlock');
+}
+
+function btnDisable(id1, id2) {
+    const btn1 = document.getElementById(id1);
+    const btn2 = document.getElementById(id2);
+    btn1.classList.add("displayNone");
+    btn2.classList.remove("displayNone");
+    btn2.classList.add("displayBlock");
 }

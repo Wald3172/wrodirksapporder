@@ -12,7 +12,7 @@
 					<br><br>{{errorInfo}}
 				</div>
 				<div class="modal-footer">
-					<button type="button" class="btn btn-danger" onclick="closeModalInfo('error-info')">Ok</button>
+					<a href="{{hrefRedirect}}"><button type="button" class="btn btn-danger" onclick="closeModalInfo('error-info')">Ok</button></a>
 				</div>
 			</div>
 		</div>
@@ -33,7 +33,7 @@
 					&#9989; Mail został wysłany!
 				</div>
 				<div class="modal-footer">
-					<a href="/order"><button type="button" class="btn btn-success" onclick="closeModalInfo('success-info')">Ok</button></a>
+					<a href="{{hrefRedirect}}"><button type="button" class="btn btn-success" onclick="closeModalInfo('success-info')">Ok</button></a>
 				</div>
 			</div>
 		</div>

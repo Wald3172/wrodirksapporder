@@ -23,15 +23,15 @@ const sendMailSBCanNotLoad = async (req, res) => {
         conn = await pool.getConnection();
 
         if (checkbox61 === 'checked') {
-            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', 'Dirty trailer', 0, user]); 
+            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', 'Dirty SB', 0, user]); 
         }
 
         if (checkbox62 === 'checked') {
-            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', 'Trailer leaks', 0, user]); 
+            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', 'SB leaks', 0, user]); 
         }
 
         if (checkbox63 === 'checked') {
-            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', 'Trailer damaged', 0, user]); 
+            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', 'SB damaged', 0, user]); 
         }
 
         if (text60) {

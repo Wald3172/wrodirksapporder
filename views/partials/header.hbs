@@ -1,11 +1,26 @@
 <header class="header">
     <div class="container-fluid header__1st-line">
         <div class="header__content">
-            <a class="logo" href="/order"><img class="logo__img" src="/img/logo.png" alt="Logo Dirks"></a>
+            <a class="logo" href="/home"><img class="logo__img" src="/img/logo.png" alt="Logo Dirks"></a>
+            <div class="header__icons">
+                <p class="header__user">{{user}}</p>
+                <a href="/profile" class="header__link" title="Zarządzanie kontem">
+                    <img src="/icons/header/user.svg" alt="user">
+                </a>
+                {{#if passOut}}
+                {{else}}
+                <a href="/profileOutlook" class="header__link" title="Brak połączenia konta z Outlook">
+                    <img src="/icons/header/outlook-nok.svg" alt="outlook">
+                </a>
+                {{/if}}
+                <a href="/logout" class="header__link" title="Wyloguj się">
+                    <img src="/icons/header/logout.svg" alt="logout">
+                </a>
+            </div>
         </div>
     </div>
     <div class="container-fluid header__breadcrumbs">
-        <a class="header__breadcrumbs__home" href="/order"><img src="/icons/home.svg" alt="Home"></a>
+        <a class="header__breadcrumbs__home" href="/home"><img src="/icons/home.svg" alt="Home"></a>
         {{#if breadcrumbs}}
         {{#each breadcrumbs}}
         <span>&mdash;</span>

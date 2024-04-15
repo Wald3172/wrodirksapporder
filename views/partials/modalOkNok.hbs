@@ -8,8 +8,7 @@
 					<a href="{{hrefRedirect}}"><button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close" onclick="closeModalInfo('error-info')"></button></a>
 				</div>
 				<div class="modal-body">
-					&#10060; Mail nie został wysłany!
-					<br><br>{{errorInfo}}
+					{{errorInfo}}
 				</div>
 				<div class="modal-footer">
 					<a href="{{hrefRedirect}}"><button type="button" class="btn btn-danger" onclick="closeModalInfo('error-info')">Ok</button></a>
@@ -29,7 +28,7 @@
 					</a>
 				</div>
 				<div class="modal-body">
-					&#9989; Mail został wysłany!
+					{{successInfo}}
 				</div>
 				<div class="modal-footer">
 					<a href="{{hrefRedirect}}"><button type="button" class="btn btn-success" onclick="closeModalInfo('success-info')">Ok</button></a>

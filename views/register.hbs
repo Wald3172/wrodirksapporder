@@ -1,0 +1,55 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+{{> modalAuth}}
+<div class="auth__header">
+	<div class="auth__logo">
+		<img class="auth__logo_img" src="/img/logo.png" alt="Logo Dirks">
+	</div>
+	<div class="auth__h1">WRO DIRKS APPLICATION</div>
+</div>
+<div class="container-fluid">
+	<div class="auth__wrapper">
+		<div class="auth__form-header">
+			Rejestracja
+		</div>
+		<form class="auth__form" action="/auth/register" method="post">
+			<div class="mb-3">
+				<label class="form-label">Imię</label>
+				<input type="text" class="form-control" aria-describedby="emailHelp" name="firstName" 
+				{{#if firstName}}value="{{firstName}}"{{/if}}required>
+			</div>
+			<div class="mb-3">
+				<label class="form-label">Nazwisko</label>
+				<input type="text" class="form-control" aria-describedby="emailHelp" name="lastName" 
+				{{#if lastName}}value="{{lastName}}"{{/if}}
+				required>
+			</div>
+			<div class="mb-3">
+				<label class="form-label">Email</label>
+				<input type="email" class="form-control" aria-describedby="emailHelp" name="email" 
+				{{#if email}}value="{{email}}"{{/if}}
+				required>
+			</div>
+			<div class="mb-3">
+				<label class="form-label">Hasło</label>
+				<input type="password" class="form-control" name="password" 
+				required>
+			</div>
+			<div class="mb-3">
+				<label class="form-label">Powtórz hasło</label>
+				<input type="password" class="form-control" name="passwordConfirm" required>
+			</div>
+			<div class="form-text mb-3">Już posiadasz konto?  
+				<a href="/start">Zaloguj się</a></div>
+			<button type="submit" class="btn btn-primary" style="width: 100%">Zarejestruj się</button>
+		</form>
+	</div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="/js/order.js"></script>
+
+</body>
+</html>

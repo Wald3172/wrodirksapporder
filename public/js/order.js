@@ -39,3 +39,12 @@ function btnDisable(id1, id2) {
     btn2.classList.remove("displayNone");
     btn2.classList.add("displayBlock");
 }
+
+function viewPassword(inputId) {
+    const input = document.getElementById(inputId);
+    if (input.type === 'password') {
+        input.type = 'text';
+    } else {
+        input.type = 'password';
+    }
+} 

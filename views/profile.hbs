@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+{{> header}} 
+{{> modalOkNok}}
+{{!-- nagłowek strony --}}
+<div class="container-fluid page-header">
+	<h3>{{pageHeader}}</h3>
+</div>
+<div class="container-fluid main-container container-height">
+	<div class="left-sidebar">
+		<div class="section-header">&mdash; Menu &mdash;</div>
+		<a class="left-sidebar__link left-sidebar__link_tac" href="/profile">Dane kontaktowe</a>
+		<a class="left-sidebar__link left-sidebar__link_tac" href="/profileOutlook">Polączenie z Outlook</a>
+	</div>
+	{{#if firstName}}
+	<div class="content profile">
+		<div class="section-header">&mdash; Dane kontaktowe &mdash;</div>
+		<form class="profile__form" action="/api/saveUserData" method="post">
+			<div class="mb-3">
+				<label for="firstName" class="form-label">Imię</label>
+				<input type="text" class="form-control" aria-describedby="emailHelp" name="firstName" id="firstName"                      
+				{{#if firstName}} value="{{firstName}}" {{/if}}
+				required>
+			</div>
+			<div class="mb-3">
+				<label for="lastName" class="form-label">Nazwisko</label>
+				<input type="text" class="form-control" name="lastName" id="lastName"
+				{{#if lastName}} value="{{lastName}}" {{/if}} required>
+			</div>
+			<button type="submit" class="btn btn-primary" style="width: 100%">Zapisz</button>
+		</form>
+	</div>
+	{{else}}
+	<div class="content profile">
+		<div class="section-header">&mdash; Polączenie konta z Outlook &mdash;</div>
+		<form class="profile__form" action="/api/saveUserOutPass" method="post">
+			<div class="mb-3">
+				<label for="passOut" class="form-label">Hasło do Twojego konta dirks-group.de</label>
+				<input type="password" class="form-control" name="passOut" id="passOut"
+				{{#if passOut}} value="{{passOut}}" {{/if}} required>
+			</div>
+			<div class="mb-3 form-check">
+				<input type="checkbox" class="form-check-input" id="viewPass" onclick="viewPassword('passOut')">
+				<label class="form-check-label" for="viewPass">Pokaż hasło</label>
+			</div>
+			<button type="submit" class="btn btn-primary" style="width: 100%">Zapisz</button>
+		</form>
+	</div>
+	{{/if}}
+</div>
+
+{{> footer}}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="/js/order.js"></script>
+
+</body>
+</html>

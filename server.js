@@ -1,7 +1,7 @@
 const express = require('express');
 const path = require('path');
 const Router = require('./routes/routes');
-// const cookie = require('cookie-parser');
+const cookie = require('cookie-parser');
 // const isLogIn = require('./controllers/auth/isLogIn');
 const hbs = require('hbs');
 const PORT = process.env.PORT || 8080;
@@ -15,6 +15,7 @@ app.use(express.static(publicDirectory));
 // use hbs
 app.set('view engine', 'hbs');
 app.set('views', 'views');
+app.use(cookie());
 app.use(express.urlencoded({ extended: false }));
 hbs.registerPartials(__dirname + '/views/partials');
 

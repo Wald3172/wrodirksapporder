@@ -4,7 +4,7 @@ const nodemailer = require('nodemailer');
 require('dotenv').config();
 const hbs = require('nodemailer-express-handlebars');
 const path = require('path');
-const jwt = require('jsonwebtoken');
+// const jwt = require('jsonwebtoken');
 const { promisify } = require("util");
 const secretKey = process.env.SECRET_KEY;
 const passHash = require('../../public/js/passHash');

@@ -13,6 +13,9 @@
 		<div class="section-header">&mdash; Menu &mdash;</div>
 		<a class="left-sidebar__link left-sidebar__link_tac" href="/profile">Dane kontaktowe</a>
 		<a class="left-sidebar__link left-sidebar__link_tac" href="/profileOutlook">Polączenie z Outlook</a>
+		{{#if admin}}
+		<a class="left-sidebar__link left-sidebar__link_tac" href="/admin">Panel administracyjny {{#if qtyUnconfirmedUsers}}({{qtyUnconfirmedUsers}}){{/if}}</a>
+		{{/if}}
 	</div>
 	{{#if firstName}}
 	<div class="content profile">

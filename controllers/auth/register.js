@@ -1,6 +1,7 @@
 const poolUser = require('../../config/dbConfigUser');
 const bcrypt = require('bcryptjs');
 const checkPassword = require('../helpers/checkPassword');
+const registerMail = require('../../mails/registerMail')
 
 const register = async (req, res) => {
 
@@ -49,6 +50,8 @@ const register = async (req, res) => {
             const user = email.slice(0, email.length-15);
             // to database 'user'
             await conn.query("INSERT INTO user (user, first_name, last_name, email, password) VALUES (?, ?, ?, ?, ?)", [user, firstName, lastName, email, hashedPassword]);
+            // send mail to the admin group
+            registerMail(user, firstName, lastName, email);
             // info 'success'
             return res.render('register', {
                 successMsg: 'Konto zostało utworzone. Po potwierdzeniu przez administratora będzie nadany dostęp do aplikacji.', title, hrefRedirect

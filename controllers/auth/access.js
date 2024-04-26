@@ -12,6 +12,8 @@ const access = async (req, res, next) => {
             let conn;
             conn = await poolUser.getConnection();
             const result = await conn.query("SELECT * FROM user WHERE id = ?", [decoded.id]);
+            const allUsers = await conn.query("SELECT * FROM user WHERE account_confirmed = 1")
+            const unconfirmedUsers = await conn.query("SELECT * FROM user WHERE account_confirmed = 0")
 
             if (conn) conn.end();
 
@@ -20,6 +22,19 @@ const access = async (req, res, next) => {
             }
 
             req.user = result[0].user;
+            if (result[0].role === 'admin') {
+                req.admin = result[0].role;
+            } else {
+                req.admin = '';
+            }
+            req.allUsers = allUsers;
+            req.unconfirmedUsers = unconfirmedUsers;
+            if (unconfirmedUsers.length >= 10) {
+                req.qtyUnconfirmedUsers = '9+'; 
+            } else {
+                req.qtyUnconfirmedUsers = unconfirmedUsers.length; 
+            }
+                
             next();
 
         } catch (error) {

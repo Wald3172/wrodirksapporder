@@ -7,6 +7,14 @@
                 <a href="/profile" class="header__link" title="Zarządzanie kontem">
                     <img src="/icons/header/user.svg" alt="user">
                 </a>
+                {{#if admin}}
+                <a href="/admin" class="header__link" title="Panel administracyjny">
+                    <img src="/icons/header/admin.svg" alt="admin">
+                    {{#if qtyUnconfirmedUsers}}
+                    <div class="header__link-qty">{{qtyUnconfirmedUsers}}</div>
+                    {{/if}}
+                </a>
+                {{/if}}
                 {{#if passOut}}
                 {{else}}
                 <a href="/profileOutlook" class="header__link" title="Brak połączenia konta z Outlook">

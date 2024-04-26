@@ -13,7 +13,9 @@ router.get('/order', access, selectApps, selectUserData, (req, res) => {
         const cotTrailer = req.cotTrailer;
         const user = req.user;
         const passOut = req.passOut;
-        res.render('order', {title, pageHeader, links, cotTrailer, footerDepartName, user, passOut})
+        const admin = req.admin;
+        const qtyUnconfirmedUsers = req.qtyUnconfirmedUsers;
+        res.render('order', {title, pageHeader, links, cotTrailer, footerDepartName, user, passOut, admin, qtyUnconfirmedUsers})
     } else {
         res.redirect('/home')
     }
@@ -35,7 +37,9 @@ router.get('/order/zglaszanie_naczep_sb', access, selectApps, selectUserData, (r
         const cotSB = req.cotSB;
         const user = req.user;
         const passOut = req.passOut;
-        res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, footerDepartName, user, passOut})
+        const admin = req.admin;
+        const qtyUnconfirmedUsers = req.qtyUnconfirmedUsers;
+        res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, footerDepartName, user, passOut, admin, qtyUnconfirmedUsers})
     } else {
         res.redirect('/home')
     }
@@ -58,7 +62,9 @@ router.get('/order/capacity', access, selectApps, selectUserData, (req, res) => 
         const dateDefault = new Date().toISOString().substr(0, 10);
         const user = req.user;
         const passOut = req.passOut;
-        res.render('capacity', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, dateDefault, footerDepartName, user, passOut})
+        const admin = req.admin;
+        const qtyUnconfirmedUsers = req.qtyUnconfirmedUsers;
+        res.render('capacity', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, dateDefault, footerDepartName, user, passOut, admin, qtyUnconfirmedUsers})
     } else {
         res.redirect('/home')
     }
@@ -80,7 +86,9 @@ router.get('/order/grafik_outbound', access, selectApps, selectUserData, (req, r
         const cotSB = req.cotSB;
         const user = req.user;
         const passOut = req.passOut;
-        res.render('grafik_outbound', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, footerDepartName, user, passOut})
+        const admin = req.admin;
+        const qtyUnconfirmedUsers = req.qtyUnconfirmedUsers;
+        res.render('grafik_outbound', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, footerDepartName, user, passOut, admin, qtyUnconfirmedUsers})
     } else {
         res.redirect('/home')
     }

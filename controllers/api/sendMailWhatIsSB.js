@@ -48,21 +48,33 @@ const sendMailWhatIsSB = async (req, res) => {
         try {
             conn = await pool.getConnection();
     
-            // const selectTo = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'to'", [app_name]);
-            // const selectCc = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'cc'", [app_name]);
+            const selectToHER = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'to' and cot = 'HER'", [app_name]);
+            const selectCcHER = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'cc' and cot = 'HER'", [app_name]);
+            const selectToDHL = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'to' and cot = 'DHL_DE'", [app_name]);
+            const selectCcDHL = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'cc' and cot = 'DHL_DE'", [app_name]);
     
             links = await conn.query("SELECT app_name, href, img FROM apps WHERE app_type = 'link' order by priority");
     
-            let to = ['vyakovenko@dirks-group.de'];
-                cc = [];
+            let toHER = [];
+                ccHER = [];
     
-            // for (i=0; i<selectCc.length; i++) {
-            //     cc.push(selectCc[i].value)
-            // }
-            // for (i=0; i<selectTo.length; i++) {
-            //     to.push(selectTo[i].value)
-            // }
-    
+            for (i=0; i<selectCcHER.length; i++) {
+                ccHER.push(selectCcHER[i].value)
+            }
+            for (i=0; i<selectToHER.length; i++) {
+                toHER.push(selectToHER[i].value)
+            }
+
+            let toDHL = [];
+                ccDHL = [];
+
+            for (i=0; i<selectCcDHL.length; i++) {
+                ccDHL.push(selectCcDHL[i].value)
+            }
+            for (i=0; i<selectToDHL.length; i++) {
+                toDHL.push(selectToDHL[i].value)
+            }
+
             if (conn) conn.end();
     
             if (passwordOutlook) {
@@ -120,8 +132,8 @@ const sendMailWhatIsSB = async (req, res) => {
                 mailOptions = {
                     priority: 'high',
                     from: user,
-                    to: to,
-                    cc: cc,
+                    to: toHER,
+                    cc: ccHER,
                     subject: `The container ${numberOfSB} is Hermes?`,
                     template: app_name,
                     context: {

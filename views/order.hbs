@@ -72,6 +72,12 @@
 				</div>
 				<p>Kontener DHL czy HERMES</p>
 			</div>
+			<div class="content__item" data-bs-toggle="modal" data-bs-target="#modal-zwr" id="zwr">
+				<div class="content__item__img">
+					<img src="/icons/mail.png" alt="img">
+				</div>
+				<p>Kontener/naczepa ZWROTY</p>
+			</div>
 		</div>
 	</div>
 </div>
@@ -216,7 +222,7 @@
 				</div>
 				<form class="modal-form" action="/api/sendMailMissingTrailer" method="post">
 					<div class="modal-body">
-						<input class="displayNone" type="text" name="app_name" value="missing_trailer">
+						<input class="displayNone" type="text" name="app_name" value="missing-trailer">
 						<div class="row">
 							<div class="mb-3 col-5">
 								<label for="date" class="form-label"><b>Data</b></label>
@@ -262,7 +268,7 @@
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="what_is_sb">
 						<div class="mb-3">
-							<label for="numberOfSB" class="form-label">Podaj numer kontenera:</label>
+							<label for="numberOfSB" class="form-label"><b>Podaj numer kontenera:</b></label>
 							<input type="text" class="form-control" id="numberOfSB" aria-describedby="emailHelp" name="numberOfSB" required>
 						</div>
 					</div>
@@ -270,6 +276,79 @@
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
 						<button id="btnActionWhatIsSB" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionWhatIsSB', 'btnDisabledWhatIsSB')">Wyślij</button>
 						<button id="btnDisabledWhatIsSB" type="submit" class="btn btn-primary displayNone" disabled>Wysyłanie...</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{{!-- kontener/naczepa zwrotów --}}
+	<div class="modal fade" id="modal-zwr" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Kontener/naczepa zwrotów</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/sendMailZwroty" method="post">
+					<div class="modal-body">
+						<input class="displayNone" type="text" name="app_name" value="zwroty">
+						<div class="mb-3">
+							<label for="cot" class="form-label"><b>Kierunek:</b></label>
+							<select class="form-select" aria-label="Default select example" id="cot" name="cot">
+								{{#each cotAll}}
+								<option selected>{{this.cot}}</option>
+								{{/each}}
+							</select>
+						</div>
+						<div class="mb-3">
+							<label for="number" class="form-label"><b>Podaj numer kontenera/naczepy:</b></label>
+							<input type="text" class="form-control" id="number" aria-describedby="emailHelp" name="number" required>
+						</div>
+						<div class="mb-3">
+							<label for="seal" class="form-label"><b>Podaj numer plomby (opcjonalnie):</b></label>
+							<input type="text" class="form-control" id="seal" aria-describedby="emailHelp" name="seal">
+						</div>
+						<div class="mb-3">
+							<label for="seal" class="form-label"><b>Zaznacz, gdzie odstawili:</b></label>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="location" value="na placu" id="yard" checked>
+								<label class="form-check-label" for="yard">
+									Na placu
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="location" value="na 22 WRO2" id="22wro2">
+								<label class="form-check-label" for="22wro2">
+									22 WRO2
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="location" value="na 23 WRO2" id="23wro2">
+								<label class="form-check-label" for="23wro2">
+									23 WRO2
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="location" value="na 24 WRO2" id="24wro2">
+								<label class="form-check-label" for="24wro2">
+									24 WRO2
+								</label>
+							</div>
+						</div>
+						<div class="form-check mt-3">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkboxZWR" name="checkboxZWR" onclick="toggle('input-add-ZWR', 'checkboxZWR')">
+							<label class="form-check-label" for="checkboxZWR">
+								Komentarz
+							</label>
+						</div>
+						<div class="form-check displayNone mt-2" id="input-add-ZWR">
+							<input class="col-12" type="text" class="form-control" id="commentZWR" name="commentZWR" aria-describedby="emailHelp" style="padding: 0 12px;">
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionZwroty" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionZwroty', 'btnDisabledZwroty')">Wyślij</button>
+						<button id="btnDisabledZwroty" type="submit" class="btn btn-primary displayNone" disabled>Wysyłanie...</button>
 					</div>
 				</form>
 			</div>

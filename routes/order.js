@@ -11,11 +11,12 @@ router.get('/order', access, selectApps, selectUserData, (req, res) => {
         const footerDepartName = "Order Management";
         const links = req.links;
         const cotTrailer = req.cotTrailer;
+        const cotAll = req.cotAll;
         const user = req.user;
         const passOut = req.passOut;
         const admin = req.admin;
         const qtyUnconfirmedUsers = req.qtyUnconfirmedUsers;
-        res.render('order', {title, pageHeader, links, cotTrailer, footerDepartName, user, passOut, admin, qtyUnconfirmedUsers})
+        res.render('order', {title, pageHeader, links, cotTrailer, footerDepartName, user, passOut, admin, qtyUnconfirmedUsers, cotAll})
     } else {
         res.redirect('/home')
     }

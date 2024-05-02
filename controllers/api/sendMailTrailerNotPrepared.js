@@ -10,7 +10,7 @@ const secretKey = process.env.SECRET_KEY;
 const passHash = require('../../public/js/passHash');
 
 const sendMailTrailerNotPrepared = async (req, res) => {
-    const { app_name, date, cot, tdf, trailer, text1, text2, text3, checkbox } = req.body; 
+    const { app_name, date, cot, tdf, trailer, text1, text2, text3, checkbox, checkboxGarbage } = req.body; 
     const title = 'WRO Dirks App | Zgłaszanie naczep/SB';
     const pageHeader = 'Zgłaszanie naczep/SB';
     const footerDepartName = "Order Management";
@@ -67,6 +67,10 @@ const sendMailTrailerNotPrepared = async (req, res) => {
 
         if (checkbox === 'checked') {
             await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, tdf, 'There are straps on the trailer', 0, user]); 
+        }
+
+        if (checkboxGarbage === 'checked') {
+            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, tdf, 'Garbage on the trailer', 0, user]); 
         }
 
         const selectTo = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and cot = ? and param = 'to'", [app_name, cot]);
@@ -132,6 +136,7 @@ const sendMailTrailerNotPrepared = async (req, res) => {
                 text2: text2,
                 text3: text3,
                 checkbox: checkbox,
+                checkboxGarbage: checkboxGarbage,
                 user: userOutlook,
                 hrefRedirect: hrefRedirect,
                 email: user

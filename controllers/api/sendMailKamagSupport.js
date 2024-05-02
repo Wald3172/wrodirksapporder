@@ -10,7 +10,7 @@ const secretKey = process.env.SECRET_KEY;
 const passHash = require('../../public/js/passHash');
 
 const sendMailKamagSupport = async (req, res) => {
-    const { app_name, commentSupportKamag } = req.body; 
+    const { app_name, typeOfSupport, breakTime, commentSupportKamag } = req.body; 
     const title = "WRO Dirks App | Order";
     const pageHeader = "Order Management";
     const footerDepartName = "Order Management";
@@ -65,7 +65,7 @@ const sendMailKamagSupport = async (req, res) => {
 
         if (conn) conn.end();
 
-        if (passwordOutlook123) {
+        if (passwordOutlook) {
             user = email[0].email;
             pass = passwordOutlook;
         } else {
@@ -100,12 +100,13 @@ const sendMailKamagSupport = async (req, res) => {
             to: to,
             cc: cc,
             subject: subject,
-            template: app_name,
+            template: typeOfSupport,
             context: {
                 user: userOutlook,
                 commentSupportKamag: commentSupportKamag,
                 hrefRedirect: hrefRedirect,
-                email: user
+                email: user,
+                breakTime: breakTime
             }
         };
 

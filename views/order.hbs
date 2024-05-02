@@ -125,8 +125,29 @@
 				<form class="modal-form" action="/api/sendMailKamagSupport" method="post">
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="kamag_support">
-						<p class="modal-text">Cześć,</p>
-						<p class="modal-text">Proszę o wsparcie.</p>
+						<p class="modal-text">Wybierz jedną z poniższych opcji i dodaj komentarz (jeśli jest wymagany):</p>
+						<div class="form-check mt25">
+							<input class="form-check-input" type="radio" name="typeOfSupport" value="kamag_support" id="typeOfSupport1" checked>
+							<label class="form-check-label" for="typeOfSupport1">
+								Wsparcie
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="typeOfSupport" value="kamag_support_many_transports" id="typeOfSupport2">
+							<label class="form-check-label" for="typeOfSupport2">
+								Wsparcie przez dużą kolejkę transportów
+							</label>
+						</div>
+						<div class="form-check">
+							<input class="form-check-input" type="radio" name="typeOfSupport" value="kamag_support_break" id="typeOfSupport3">
+							<label class="form-check-label" for="typeOfSupport3">
+								Wsparcie na czas przerwy
+							</label>
+						</div>
+						<div class="form-check">
+							<div id="emailHelp" class="form-text">Wybierz czas:</div>
+							<input style="padding-left: 6px;" type="time" id="breakTime" name="breakTime" min="05:00" max="22:00" value="09:00">
+						</div>
 						<div class="form-check mt25">
 							<input class="form-check-input" type="checkbox" value="checked" id="checkboxSupportKamag" name="checkboxSupportKamag" onclick="toggle('input-add-SupportKamag', 'checkboxSupportKamag')">
 							<label class="form-check-label" for="checkboxSupportKamag">

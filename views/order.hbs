@@ -66,6 +66,12 @@
 				</div>
 				<p>Zgłaszanie naczep/SB</p>
 			</a>
+			<div class="content__item" data-bs-toggle="modal" data-bs-target="#modal-what-is-sb" id="what-is-sb">
+				<div class="content__item__img">
+					<img src="/icons/mail.png" alt="img">
+				</div>
+				<p>Kontener DHL czy HERMES</p>
+			</div>
 		</div>
 	</div>
 </div>
@@ -239,6 +245,31 @@
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
 						<button id="btnActionMissingTrailer" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionMissingTrailer', 'btnDisabledMissingTrailer')">Wyślij</button>
 						<button id="btnDisabledMissingTrailer" type="submit" class="btn btn-primary displayNone" disabled>Wysyłanie...</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{{!-- kontener DHL czy Hermes? --}}
+	<div class="modal fade" id="modal-what-is-sb" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Sprawdzanie, czyj to kontener</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/sendMailWhatIsSB" method="post">
+					<div class="modal-body">
+						<input class="displayNone" type="text" name="app_name" value="what_is_sb">
+						<div class="mb-3">
+							<label for="numberOfSB" class="form-label">Podaj numer kontenera:</label>
+							<input type="text" class="form-control" id="numberOfSB" aria-describedby="emailHelp" name="numberOfSB" required>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionWhatIsSB" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionWhatIsSB', 'btnDisabledWhatIsSB')">Wyślij</button>
+						<button id="btnDisabledWhatIsSB" type="submit" class="btn btn-primary displayNone" disabled>Wysyłanie...</button>
 					</div>
 				</form>
 			</div>

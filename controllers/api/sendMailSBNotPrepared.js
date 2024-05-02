@@ -139,7 +139,7 @@ const sendMailSBNotPrepared = async (req, res) => {
             const successInfo = true;
             res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, successInfo, hrefRedirect, footerDepartName});
             }
-        });;
+        });
     
 
     } catch (error) {

@@ -12,6 +12,8 @@ const sendMailSlowReservation = require('../controllers/api/sendMailSlowReservat
 const sendMailKamagSupport = require('../controllers/api/sendMailKamagSupport');
 const saveUserData = require('../controllers/api/saveUserData');
 const saveUserOutPass = require('../controllers/api/saveUserOutPass');
+const sendMailWhatIsSB = require('../controllers/api/sendMailWhatIsSB');
+
 const selectCapacity = require('../controllers/order/selectCapacity');
 const updateCapacity = require('../controllers/order/updateCapacity');
 
@@ -27,7 +29,10 @@ router.post('/api/sendMailSlowReservation', sendMailSlowReservation);
 router.post('/api/sendMailKamagSupport', sendMailKamagSupport);
 router.post('/api/saveUserData', saveUserData);
 router.post('/api/saveUserOutPass', saveUserOutPass);
+router.post('/api/sendMailWhatIsSB', sendMailWhatIsSB);
+
 router.post('/order/selectCapacity', selectCapacity);
 router.post('/order/updateCapacity', updateCapacity);
+
 
 module.exports = router;

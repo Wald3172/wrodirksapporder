@@ -2,13 +2,12 @@ const poolUser = require('../../config/dbConfigUser');
 const jwt = require('jsonwebtoken');
 const { promisify } = require("util");
 require('dotenv').config();
-const secretKey = process.env.SECRET_KEY;
-const passHash = require('../../public/js/passHash');
+const CryptoJS = require('crypto-js');
 
 const saveUserOutPass = async (req, res) => {
     
     const { passOut } = req.body;
-    const pass = passHash(passOut, secretKey);
+    const pass = CryptoJS.enc.Base64.stringify(CryptoJS.enc.Utf8.parse(passOut));
 
     const title = 'WRO Dirks App | Konto';
     const pageHeader = "Moje konto";

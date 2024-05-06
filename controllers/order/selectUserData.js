@@ -2,8 +2,7 @@ const poolUser = require('../../config/dbConfigUser');
 const jwt = require('jsonwebtoken');
 const { promisify } = require("util");
 require('dotenv').config();
-const secretKey = process.env.SECRET_KEY;
-const passHash = require('../../public/js/passHash');
+const CryptoJS = require('crypto-js');
 
 const selectUserData = async (req, res, next) => {
 
@@ -17,12 +16,8 @@ const selectUserData = async (req, res, next) => {
     
             const user = await conn.query("SELECT first_name, last_name FROM user WHERE id = ?", [decoded.id]);
             const passOut = await conn.query("SELECT pass_out FROM outlook WHERE user_id = ?", [decoded.id])
-    
-            let passwordOutlook;
-    
-            if (passOut[0]) {
-                passwordOutlook = passHash(passOut[0].pass_out, secretKey);
-            }
+
+            const passwordOutlook = CryptoJS.enc.Base64.parse(passOut[0].pass_out).toString(CryptoJS.enc.Utf8);
             
             req.user = `${user[0].first_name} ${user[0].last_name}`;
             req.firstName = user[0].first_name;

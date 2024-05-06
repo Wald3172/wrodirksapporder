@@ -6,8 +6,7 @@ const hbs = require('nodemailer-express-handlebars');
 const path = require('path');
 const jwt = require('jsonwebtoken');
 const { promisify } = require("util");
-const secretKey = process.env.SECRET_KEY;
-const passHash = require('../../public/js/passHash');
+const CryptoJS = require('crypto-js');
 
 const sendMailSlowReservation = async (req, res) => {
     const { app_name, commentSlowReservation } = req.body; 
@@ -32,9 +31,7 @@ const sendMailSlowReservation = async (req, res) => {
         const userOut = await conn.query("SELECT first_name, last_name FROM user WHERE id = ?", [decoded.id]);
         const passOut = await conn.query("SELECT pass_out FROM outlook WHERE user_id = ?", [decoded.id]);
 
-        if (passOut[0]) {
-            passwordOutlook = passHash(passOut[0].pass_out, secretKey);
-        }
+        passwordOutlook = CryptoJS.enc.Base64.parse(passOut[0].pass_out).toString(CryptoJS.enc.Utf8);
     
         userOutlook = `${userOut[0].first_name} ${userOut[0].last_name}`;
 

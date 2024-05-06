@@ -15,7 +15,7 @@ const sendMailMissingTrailer = async (req, res) => {
     const pageHeader = 'Order Management';
     const footerDepartName = "Order Management";
     const hrefRedirect = '/order';
-
+    console.log(app_name);
     let conn;
     let passwordOutlook;
     let userOutlook;

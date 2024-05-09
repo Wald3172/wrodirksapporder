@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const { promisify } = require("util");
 const CryptoJS = require('crypto-js');
 const fs = require('fs');
-const sharp = require('sharp');
+// const sharp = require('sharp');
 
 const sendMailWhatIsSB = async (req, res) => {
     const { app_name, numberOfSB, file } = req.body; 
@@ -17,15 +17,25 @@ const sendMailWhatIsSB = async (req, res) => {
     const pageHeader = "Order Management";
     const footerDepartName = "Order Management";
     const hrefRedirect = '/order';
-    const currentDate = ''+new Date().getFullYear()+(new Date().getMonth()+1)+new Date().getDate()+'_'+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+'_';
-    const pathName = 'what_is_sb';
+    // const currentDate = ''+new Date().getFullYear()+(new Date().getMonth()+1)+new Date().getDate()+'_'+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+'_';
+    // const pathName = 'what_is_sb';
+    let attachmentsFilesSharp = [];
 
     if (req.files.file.length > 1) {
         req.files.file.forEach(element => {
-            element.mv(`public/drive/${pathName}/${currentDate}${element.name}`);
+            element.mv(`public/drive/sharp/${element.name}`);
+            attachmentsFilesSharp.push({
+                filename: element.name,
+                path: 'public/drive/sharp/'+element.name
+            });
+            // element.mv(`public/drive/${pathName}/${currentDate}${element.name}`);
         });        
     } else {
-        req.files.file.mv(`public/drive/${pathName}/${currentDate}${req.files.file.name}`);
+        req.files.file.mv(`public/drive/sharp/${req.files.file.name}`);
+        attachmentsFilesSharp.push({
+            filename: req.files.file.name,
+            path: 'public/drive/sharp/'+req.files.file.name
+        });
     }
 
     let conn;
@@ -35,7 +45,6 @@ const sendMailWhatIsSB = async (req, res) => {
     let pass = '';
     let email = '';
     let links;
-    let attachmentsFilesSharp = [];
 
     if (req.cookies.userSave) {
 
@@ -116,35 +125,35 @@ const sendMailWhatIsSB = async (req, res) => {
                 extName: ".handlebars",
             }));
 
-            if (req.files.file.length > 1) {
-                req.files.file.forEach(element => {
-                    if (element.mimetype === 'image/jpeg' && element.size >= 750000) {
-                        sharp(`public/drive/${pathName}/${currentDate}${element.name}`)
-                            .jpeg({quality: 80})
-                            .toFile('public/drive/sharp/'+element.name)
-                            .then()
-                    } else {
-                        element.mv('public/drive/sharp/'+element.name);
-                    }
-                    attachmentsFilesSharp.push({
-                        filename: element.name,
-                        path: 'public/drive/sharp/'+element.name
-                    });
-                });
-            } else {
-                if (req.files.file.mimetype === 'image/jpeg' && req.files.file.size >= 750000) {
-                        sharp(`./public/drive/${pathName}/${currentDate}${req.files.file.name}`)
-                            .jpeg({quality: 80})
-                            .toFile('./public/drive/sharp/'+req.files.file.name)
-                            .then()
-                    } else {
-                        req.files.file.mv('public/drive/sharp/'+req.files.file.name);
-                    }
-                    attachmentsFilesSharp.push({
-                        filename: req.files.file.name,
-                        path: 'public/drive/sharp/'+req.files.file.name
-                    });
-            }
+            // if (req.files.file.length > 1) {
+            //     req.files.file.forEach(element => {
+            //         if (element.mimetype === 'image/jpeg' && element.size >= 750000) {
+            //             sharp(`public/drive/${pathName}/${currentDate}${element.name}`)
+            //                 .jpeg({quality: 80})
+            //                 .toFile('public/drive/sharp/'+element.name)
+            //                 .then()
+            //         } else {
+            //             element.mv('public/drive/sharp/'+element.name);
+            //         }
+            //         attachmentsFilesSharp.push({
+            //             filename: element.name,
+            //             path: 'public/drive/sharp/'+element.name
+            //         });
+            //     });
+            // } else {
+            //     if (req.files.file.mimetype === 'image/jpeg' && req.files.file.size >= 750000) {
+            //             sharp(`./public/drive/${pathName}/${currentDate}${req.files.file.name}`)
+            //                 .jpeg({quality: 80})
+            //                 .toFile('./public/drive/sharp/'+req.files.file.name)
+            //                 .then()
+            //         } else {
+            //             req.files.file.mv('public/drive/sharp/'+req.files.file.name);
+            //         }
+            //         attachmentsFilesSharp.push({
+            //             filename: req.files.file.name,
+            //             path: 'public/drive/sharp/'+req.files.file.name
+            //         });
+            // }
             
             let mailOptions = {
                 priority: 'high',

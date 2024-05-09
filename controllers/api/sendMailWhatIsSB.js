@@ -7,14 +7,26 @@ const path = require('path');
 const jwt = require('jsonwebtoken');
 const { promisify } = require("util");
 const CryptoJS = require('crypto-js');
+const fs = require('fs');
+const sharp = require('sharp');
 
 const sendMailWhatIsSB = async (req, res) => {
-    const { app_name, numberOfSB } = req.body; 
+    const { app_name, numberOfSB, file } = req.body; 
 
     const title = "WRO Dirks App | Order";
     const pageHeader = "Order Management";
     const footerDepartName = "Order Management";
     const hrefRedirect = '/order';
+    const currentDate = ''+new Date().getFullYear()+(new Date().getMonth()+1)+new Date().getDate()+'_'+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+'_';
+    const pathName = 'what_is_sb';
+
+    if (req.files.file.length > 1) {
+        req.files.file.forEach(element => {
+            element.mv(`public/drive/${pathName}/${currentDate}${element.name}`);
+        });        
+    } else {
+        req.files.file.mv(`public/drive/${pathName}/${currentDate}${req.files.file.name}`);
+    }
 
     let conn;
     let passwordOutlook;
@@ -23,6 +35,7 @@ const sendMailWhatIsSB = async (req, res) => {
     let pass = '';
     let email = '';
     let links;
+    let attachmentsFilesSharp = [];
 
     if (req.cookies.userSave) {
 
@@ -102,12 +115,42 @@ const sendMailWhatIsSB = async (req, res) => {
                 viewPath: path.resolve('./views/mails'),
                 extName: ".handlebars",
             }));
+
+            if (req.files.file.length > 1) {
+                req.files.file.forEach(element => {
+                    if (element.mimetype === 'image/jpeg' && element.size >= 750000) {
+                        sharp(`public/drive/${pathName}/${currentDate}${element.name}`)
+                            .jpeg({quality: 80})
+                            .toFile('public/drive/sharp/'+element.name)
+                            .then()
+                    } else {
+                        element.mv('public/drive/sharp/'+element.name);
+                    }
+                    attachmentsFilesSharp.push({
+                        filename: element.name,
+                        path: 'public/drive/sharp/'+element.name
+                    });
+                });
+            } else {
+                if (req.files.file.mimetype === 'image/jpeg' && req.files.file.size >= 750000) {
+                        sharp(`./public/drive/${pathName}/${currentDate}${req.files.file.name}`)
+                            .jpeg({quality: 80})
+                            .toFile('./public/drive/sharp/'+req.files.file.name)
+                            .then()
+                    } else {
+                        req.files.file.mv('public/drive/sharp/'+req.files.file.name);
+                    }
+                    attachmentsFilesSharp.push({
+                        filename: req.files.file.name,
+                        path: 'public/drive/sharp/'+req.files.file.name
+                    });
+            }
             
             let mailOptions = {
                 priority: 'high',
                 from: user,
-                to: to,
-                cc: cc,
+                to: toDHL,
+                cc: ccDHL,
                 subject: `The container ${numberOfSB} is DHL?`,
                 template: app_name,
                 context: {
@@ -115,7 +158,8 @@ const sendMailWhatIsSB = async (req, res) => {
                     hrefRedirect: hrefRedirect,
                     email: user,
                     numberOfSB: numberOfSB
-                }
+                },
+                attachments: attachmentsFilesSharp
             };
     
             transporter.sendMail(mailOptions, (error, info) => {
@@ -138,15 +182,26 @@ const sendMailWhatIsSB = async (req, res) => {
                         hrefRedirect: hrefRedirect,
                         email: user,
                         numberOfSB: numberOfSB
-                    }
+                    },
+                    attachments: attachmentsFilesSharp
                 };
                 transporter.sendMail(mailOptions, (error, info) => {
                     if (error) {
                     console.log('Email error ---> ' + error);
+                    attachmentsFilesSharp.forEach(element => {
+                        fs.unlink(element.path, err => {
+                            if (err) throw err;
+                        })
+                    });
                     const errorInfo = error;
                     res.render('order', {title, pageHeader, links, errorInfo, hrefRedirect, footerDepartName});
                     } else {
                     console.log('Email sent ---> ' + info.response);
+                    attachmentsFilesSharp.forEach(element => {
+                        fs.unlink(element.path, err => {
+                            if (err) throw err;
+                        })
+                    });
                     const successInfo = true;
                     res.render('order', {title, pageHeader, links, successInfo, hrefRedirect, footerDepartName});
                     }
@@ -156,6 +211,11 @@ const sendMailWhatIsSB = async (req, res) => {
     
         } catch (error) {
             console.log(error);
+            attachmentsFilesSharp.forEach(element => {
+                fs.unlink(element.path, err => {
+                    if (err) throw err;
+                })
+            });
             const errorInfo = error;
             res.render('order', {title, pageHeader, errorInfo, hrefRedirect, footerDepartName, links});
         }

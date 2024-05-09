@@ -7,6 +7,8 @@ const path = require('path');
 const jwt = require('jsonwebtoken');
 const { promisify } = require("util");
 const CryptoJS = require('crypto-js');
+const fs = require('fs');
+const sharp = require('sharp');
 
 const sendMailSBCanNotLoad = async (req, res) => {
     const { app_name, date, cot, trailer, checkbox61, checkbox62, checkbox63, text60 } = req.body; 
@@ -20,6 +22,16 @@ const sendMailSBCanNotLoad = async (req, res) => {
         }
     ];
     const hrefRedirect = '/order/zglaszanie_naczep_sb';
+    const currentDate = ''+new Date().getFullYear()+(new Date().getMonth()+1)+new Date().getDate()+'_'+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+'_';
+    const pathName = 'problems_with_sb';
+
+    if (req.files.file.length > 1) {
+        req.files.file.forEach(element => {
+            element.mv(`public/drive/${pathName}/${currentDate}${element.name}`);
+        });        
+    } else {
+        req.files.file.mv(`public/drive/${pathName}/${currentDate}${req.files.file.name}`);
+    }
 
     let conn;
     let passwordOutlook;
@@ -30,6 +42,7 @@ const sendMailSBCanNotLoad = async (req, res) => {
     let links;
     let cotTrailer;
     let cotSB;
+    let attachmentsFilesSharp = [];
 
     try {
         conn = await poolUser.getConnection();
@@ -116,6 +129,36 @@ const sendMailSBCanNotLoad = async (req, res) => {
             extName: ".handlebars",
         }));
         
+        if (req.files.file.length > 1) {
+            req.files.file.forEach(element => {
+                if (element.mimetype === 'image/jpeg' && element.size >= 750000) {
+                    sharp(`public/drive/${pathName}/${currentDate}${element.name}`)
+                        .jpeg({quality: 80})
+                        .toFile('public/drive/sharp/'+element.name)
+                        .then()
+                } else {
+                    element.mv('public/drive/sharp/'+element.name);
+                }
+                attachmentsFilesSharp.push({
+                    filename: element.name,
+                    path: 'public/drive/sharp/'+element.name
+                });
+            });
+        } else {
+            if (req.files.file.mimetype === 'image/jpeg' && req.files.file.size >= 750000) {
+                    sharp(`./public/drive/${pathName}/${currentDate}${req.files.file.name}`)
+                        .jpeg({quality: 80})
+                        .toFile('./public/drive/sharp/'+req.files.file.name)
+                        .then()
+                } else {
+                    req.files.file.mv('public/drive/sharp/'+req.files.file.name);
+                }
+                attachmentsFilesSharp.push({
+                    filename: req.files.file.name,
+                    path: 'public/drive/sharp/'+req.files.file.name
+                });
+        }
+        
         let mailOptions = {
             priority: 'high',
             from: user,
@@ -133,16 +176,27 @@ const sendMailSBCanNotLoad = async (req, res) => {
                 user: userOutlook,
                 hrefRedirect: hrefRedirect,
                 email: user
-            }
+            },
+            attachments: attachmentsFilesSharp
         };
 
         transporter.sendMail(mailOptions, (error, info) => {
             if (error) {
             console.log('Email error ---> ' + error);
+            attachmentsFilesSharp.forEach(element => {
+                fs.unlink(element.path, err => {
+                    if (err) throw err;
+                })
+            });
             const errorInfo = error;
             res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, errorInfo, hrefRedirect, footerDepartName});
             } else {
             console.log('Email sent ---> ' + info.response);
+            attachmentsFilesSharp.forEach(element => {
+                fs.unlink(element.path, err => {
+                    if (err) throw err;
+                })
+            });
             const successInfo = true;
             res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, successInfo, hrefRedirect, footerDepartName});
             }
@@ -150,6 +204,11 @@ const sendMailSBCanNotLoad = async (req, res) => {
 
     } catch (error) {
         console.log(error);
+        attachmentsFilesSharp.forEach(element => {
+            fs.unlink(element.path, err => {
+                if (err) throw err;
+            })
+        });
         const errorInfo = error;
         res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, errorInfo, hrefRedirect, footerDepartName});
     }

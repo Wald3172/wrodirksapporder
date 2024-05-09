@@ -66,7 +66,7 @@
 					<h5 class="modal-title" id="staticBackdropLabel">Naczepa nie przygotowana do załadunku</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<form class="modal-form" action="/api/sendMailTrailerNotPrepared" method="post">
+				<form class="modal-form" action="/api/sendMailTrailerNotPrepared" method="post" enctype="multipart/form-data">
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
 						<div class="row">
@@ -142,6 +142,9 @@
 							<input class="col-12" type="text" class="form-control" id="text3" name="text3" aria-describedby="emailHelp" style="padding: 0 12px;">
 							<div id="emailHelp" class="form-text">* pole musi być wypełnione w języku angielskim</div>
 						</div>
+						<div class="mt-5">
+							<input class="form-control form-control-sm" type="file" name="file" multiple>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
@@ -160,7 +163,7 @@
 					<h5 class="modal-title" id="staticBackdropLabel">Naczepa błędnie zostawiona na placu</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<form class="modal-form" action="/api/sendMailTrailerWronglyLeft" method="post">
+				<form class="modal-form" action="/api/sendMailTrailerWronglyLeft" method="post" enctype="multipart/form-data">
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
 						<div class="row">
@@ -211,6 +214,9 @@
 							<input class="col-12" type="text" class="form-control" id="textTrailerWronglyLeft" name="textTrailerWronglyLeft" aria-describedby="emailHelp" style="padding: 0 12px;">
 							<div id="emailHelp" class="form-text">* pole musi być wypełnione w języku angielskim</div>
 						</div>
+						<div class="mt-5">
+							<input class="form-control form-control-sm" type="file" name="file" multiple>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
@@ -229,7 +235,7 @@
 					<h5 class="modal-title" id="staticBackdropLabel">Naczepa, której nie możemy ładować</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<form class="modal-form" action="/api/sendMailTrailerCanNotLoad" method="post">
+				<form class="modal-form" action="/api/sendMailTrailerCanNotLoad" method="post" enctype="multipart/form-data">
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
 						<div class="row">
@@ -286,6 +292,9 @@
 							<input class="col-12" type="text" class="form-control" id="text30" name="text30" aria-describedby="emailHelp" style="padding: 0 12px;">
 							<div class="form-text">* pole musi być wypełnione w języku angielskim</div>
 						</div>
+						<div class="mt-5">
+							<input class="form-control form-control-sm" type="file" name="file" multiple>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
@@ -304,7 +313,7 @@
 					<h5 class="modal-title" id="staticBackdropLabel">Kontener nie przygotowany do załadunku </h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<form class="modal-form" action="/api/sendMailSBNotPrepared" method="post">
+				<form class="modal-form" action="/api/sendMailSBNotPrepared" method="post" enctype="multipart/form-data">
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
 						<div class="row">
@@ -344,6 +353,9 @@
 							<input class="col-12" type="text" class="form-control" id="text40" name="text40" aria-describedby="emailHelp" style="padding: 0 12px;">
 							<div id="emailHelp" class="form-text">* pole musi być wypełnione w języku angielskim</div>
 						</div>
+						<div class="mt-5">
+							<input class="form-control form-control-sm" type="file" name="file" multiple>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
@@ -362,7 +374,7 @@
 					<h5 class="modal-title" id="staticBackdropLabel">Kontener błędnie zostawiony na placu</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<form class="modal-form" action="/api/sendMailSBWronglyLeft" method="post">
+				<form class="modal-form" action="/api/sendMailSBWronglyLeft" method="post" enctype="multipart/form-data">
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
 						<div class="row">
@@ -408,6 +420,9 @@
 							<input class="col-12" type="text" class="form-control" id="textSBWronglyLeft" name="textSBWronglyLeft" aria-describedby="emailHelp" style="padding: 0 12px;">
 							<div id="emailHelp" class="form-text">* pole musi być wypełnione w języku angielskim</div>
 						</div>
+						<div class="mt-5">
+							<input class="form-control form-control-sm" type="file" name="file" multiple>
+						</div>
 					</div>
 					<div class="modal-footer">
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
@@ -426,7 +441,7 @@
 					<h5 class="modal-title" id="staticBackdropLabel">Kontener, który nie możemy ładować</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<form class="modal-form" action="/api/sendMailSBCanNotLoad" method="post">
+				<form class="modal-form" action="/api/sendMailSBCanNotLoad" method="post" enctype="multipart/form-data">
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="problems_with_trailer_and_sb">
 						<div class="row">
@@ -477,6 +492,9 @@
 						<div class="form-check displayNone mt-2" id="input-add-option-6">
 							<input class="col-12" type="text" class="form-control" id="text30" name="text30" aria-describedby="emailHelp" style="padding: 0 12px;">
 							<div id="emailHelp" class="form-text">* pole musi być wypełnione w języku angielskim</div>
+						</div>
+						<div class="mt-5">
+							<input class="form-control form-control-sm" type="file" name="file" multiple>
 						</div>
 					</div>
 					<div class="modal-footer">

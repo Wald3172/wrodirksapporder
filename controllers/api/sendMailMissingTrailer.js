@@ -92,7 +92,7 @@ const sendMailMissingTrailer = async (req, res) => {
             viewPath: path.resolve('./views/mails'),
             extName: ".handlebars",
         }));
-        
+
         let mailOptions = {
             priority: 'high',
             from: user,

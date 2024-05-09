@@ -1,4 +1,5 @@
 const express = require('express');
+const fileUpload = require('express-fileupload');
 const path = require('path');
 const Router = require('./routes/routes');
 const cookie = require('cookie-parser');
@@ -11,6 +12,8 @@ const app = express();
 // use static files from 'public'
 const publicDirectory = path.join(__dirname, '/public');
 app.use(express.static(publicDirectory));
+
+app.use(fileUpload({}));
 
 // use hbs
 app.set('view engine', 'hbs');

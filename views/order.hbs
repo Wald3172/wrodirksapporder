@@ -264,12 +264,15 @@
 					<h5 class="modal-title" id="staticBackdropLabel">Sprawdzanie, czyj to kontener</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<form class="modal-form" action="/api/sendMailWhatIsSB" method="post">
+				<form class="modal-form" action="/api/sendMailWhatIsSB" method="post" enctype="multipart/form-data">
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="what_is_sb">
 						<div class="mb-3">
 							<label for="numberOfSB" class="form-label"><b>Podaj numer kontenera:</b></label>
 							<input type="text" class="form-control" id="numberOfSB" aria-describedby="emailHelp" name="numberOfSB" required>
+						</div>
+						<div class="mt-5">
+							<input class="form-control form-control-sm" type="file" name="file" multiple>
 						</div>
 					</div>
 					<div class="modal-footer">
@@ -289,7 +292,7 @@
 					<h5 class="modal-title" id="staticBackdropLabel">Kontener/naczepa zwrotów</h5>
 					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
 				</div>
-				<form class="modal-form" action="/api/sendMailZwroty" method="post">
+				<form class="modal-form" action="/api/sendMailZwroty" method="post" enctype="multipart/form-data">
 					<div class="modal-body">
 						<input class="displayNone" type="text" name="app_name" value="zwroty">
 						<div class="mb-3">
@@ -343,6 +346,9 @@
 						</div>
 						<div class="form-check displayNone mt-2" id="input-add-ZWR">
 							<input class="col-12" type="text" class="form-control" id="commentZWR" name="commentZWR" aria-describedby="emailHelp" style="padding: 0 12px;">
+						</div>
+						<div class="mt-5">
+							<input class="form-control form-control-sm" type="file" name="file" multiple>
 						</div>
 					</div>
 					<div class="modal-footer">

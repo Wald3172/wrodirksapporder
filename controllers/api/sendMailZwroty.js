@@ -8,7 +8,7 @@ const jwt = require('jsonwebtoken');
 const { promisify } = require("util");
 const CryptoJS = require('crypto-js');
 const fs = require('fs');
-// const sharp = require('sharp');
+const sharp = require('sharp');
 
 const sendMailZwroty = async (req, res) => {
     const { app_name, cot, number, seal, location, commentZWR } = req.body; 
@@ -17,26 +17,28 @@ const sendMailZwroty = async (req, res) => {
     const pageHeader = 'Order Management';
     const footerDepartName = "Order Management";
     const hrefRedirect = '/order';
-    // const currentDate = ''+new Date().getFullYear()+(new Date().getMonth()+1)+new Date().getDate()+'_'+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+'_';
-    // const pathName = 'zwroty';
+    const currentDate = ''+new Date().getFullYear()+(new Date().getMonth()+1)+new Date().getDate()+'_'+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+'_';
+    const pathName = 'zwroty';
     let attachmentsFilesSharp = [];
 
-    if (req.files.file.length > 1) {
-        req.files.file.forEach(element => {
-            element.mv(`public/drive/sharp/${element.name}`);
-            attachmentsFilesSharp.push({
-                filename: element.name,
-                path: 'public/drive/sharp/'+element.name
-            });
-            // element.mv(`public/drive/${pathName}/${currentDate}${element.name}`);
-        });        
-    } else {
-        // req.files.file.mv(`public/drive/${pathName}/${currentDate}${req.files.file.name}`);
-        req.files.file.mv(`public/drive/sharp/${req.files.file.name}`);
-        attachmentsFilesSharp.push({
-            filename: req.files.file.name,
-            path: 'public/drive/sharp/'+req.files.file.name
-        });
+    if (req.files) {
+        if (req.files.file.length > 1) {
+            req.files.file.forEach(element => {
+                // element.mv(`public/drive/sharp/${element.name}`);
+                // attachmentsFilesSharp.push({
+                //     filename: element.name,
+                //     path: 'public/drive/sharp/'+element.name
+                // });
+                element.mv(`public/drive/${pathName}/${currentDate}${element.name}`);
+            });        
+        } else {
+            req.files.file.mv(`public/drive/${pathName}/${currentDate}${req.files.file.name}`);
+            // req.files.file.mv(`public/drive/sharp/${req.files.file.name}`);
+            // attachmentsFilesSharp.push({
+            //     filename: req.files.file.name,
+            //     path: 'public/drive/sharp/'+req.files.file.name
+            // });
+        }
     }
 
     let conn;
@@ -72,17 +74,17 @@ const sendMailZwroty = async (req, res) => {
 
         links = await conn.query("SELECT app_name, href, img FROM apps WHERE app_type = 'link' order by priority");
 
-        let to = [];
+        let to = ['vyakovenko@dirks-group.de'];
             cc = [];
             
         const subject = `Zwroty ${cot} - ${number}`;
 
-        for (i=0; i<selectCc.length; i++) {
-            cc.push(selectCc[i].value)
-        }
-        for (i=0; i<selectTo.length; i++) {
-            to.push(selectTo[i].value)
-        }
+        // for (i=0; i<selectCc.length; i++) {
+        //     cc.push(selectCc[i].value)
+        // }
+        // for (i=0; i<selectTo.length; i++) {
+        //     to.push(selectTo[i].value)
+        // }
 
         if (conn) conn.end();
 
@@ -115,35 +117,37 @@ const sendMailZwroty = async (req, res) => {
             extName: ".handlebars",
         }));
 
-        // if (req.files.file.length > 1) {
-        //     req.files.file.forEach(element => {
-        //         if (element.mimetype === 'image/jpeg' && element.size >= 750000) {
-        //             sharp(`public/drive/${pathName}/${currentDate}${element.name}`)
-        //                 .jpeg({quality: 80})
-        //                 .toFile('public/drive/sharp/'+element.name)
-        //                 .then()
-        //         } else {
-        //             element.mv('public/drive/sharp/'+element.name);
-        //         }
-        //         attachmentsFilesSharp.push({
-        //             filename: element.name,
-        //             path: 'public/drive/sharp/'+element.name
-        //         });
-        //     });
-        // } else {
-        //     if (req.files.file.mimetype === 'image/jpeg' && req.files.file.size >= 750000) {
-        //             sharp(`./public/drive/${pathName}/${currentDate}${req.files.file.name}`)
-        //                 .jpeg({quality: 80})
-        //                 .toFile('./public/drive/sharp/'+req.files.file.name)
-        //                 .then()
-        //         } else {
-        //             req.files.file.mv('public/drive/sharp/'+req.files.file.name);
-        //         }
-        //         attachmentsFilesSharp.push({
-        //             filename: req.files.file.name,
-        //             path: 'public/drive/sharp/'+req.files.file.name
-        //         });
-        // }
+        if (req.files) {
+            if (req.files.file.length > 1) {
+                req.files.file.forEach(element => {
+                    if (element.mimetype === 'image/jpeg' && element.size >= 750000) {
+                        sharp(`public/drive/${pathName}/${currentDate}${element.name}`)
+                            .jpeg({quality: 80})
+                            .toFile('public/drive/sharp/'+element.name)
+                            .then()
+                    } else {
+                        element.mv('public/drive/sharp/'+element.name);
+                    }
+                    attachmentsFilesSharp.push({
+                        filename: element.name,
+                        path: 'public/drive/sharp/'+element.name
+                    });
+                });
+            } else {
+                if (req.files.file.mimetype === 'image/jpeg' && req.files.file.size >= 750000) {
+                        sharp(`./public/drive/${pathName}/${currentDate}${req.files.file.name}`)
+                            .jpeg({quality: 80})
+                            .toFile('./public/drive/sharp/'+req.files.file.name)
+                            .then()
+                    } else {
+                        req.files.file.mv('public/drive/sharp/'+req.files.file.name);
+                    }
+                    attachmentsFilesSharp.push({
+                        filename: req.files.file.name,
+                        path: 'public/drive/sharp/'+req.files.file.name
+                    });
+            }
+        }
         
         let mailOptions = {
             priority: 'high',

@@ -24,24 +24,25 @@ const sendMailTrailerNotPrepared = async (req, res) => {
     const hrefRedirect = '/order/zglaszanie_naczep_sb';
     // const currentDate = ''+new Date().getFullYear()+(new Date().getMonth()+1)+new Date().getDate()+'_'+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+'_';
     // const pathName = 'problems_with_sb';
-
     let attachmentsFilesSharp = [];
 
-    if (req.files.file.length > 1) {
-        req.files.file.forEach(element => {
-            element.mv(`public/drive/sharp/${element.name}`);
+    if (req.files) {
+        if (req.files.file.length > 1) {
+            req.files.file.forEach(element => {
+                element.mv(`public/drive/sharp/${element.name}`);
+                attachmentsFilesSharp.push({
+                    filename: element.name,
+                    path: 'public/drive/sharp/'+element.name
+                });
+                // element.mv(`public/drive/${pathName}/${currentDate}${element.name}`);
+            });        
+        } else {
+            req.files.file.mv(`public/drive/sharp/${req.files.file.name}`);
             attachmentsFilesSharp.push({
-                filename: element.name,
-                path: 'public/drive/sharp/'+element.name
+                filename: req.files.file.name,
+                path: 'public/drive/sharp/'+req.files.file.name
             });
-            // element.mv(`public/drive/${pathName}/${currentDate}${element.name}`);
-        });        
-    } else {
-        req.files.file.mv(`public/drive/sharp/${req.files.file.name}`);
-        attachmentsFilesSharp.push({
-            filename: req.files.file.name,
-            path: 'public/drive/sharp/'+req.files.file.name
-        });
+        }
     }
 
     let conn;
@@ -99,6 +100,7 @@ const sendMailTrailerNotPrepared = async (req, res) => {
         links = await conn.query("SELECT app_name, href, img FROM apps WHERE app_type = 'link' order by priority");
         cotTrailer = await conn.query("SELECT DISTINCT cot FROM list_of_cot WHERE sb='trailer'");
         cotSB = await conn.query("SELECT DISTINCT cot FROM list_of_cot WHERE sb='container'");
+
         let to = [];
             cc = [];
             
@@ -141,34 +143,36 @@ const sendMailTrailerNotPrepared = async (req, res) => {
             extName: ".handlebars",
         }));
 
-        // if (req.files.file.length > 1) {
-        //     req.files.file.forEach(element => {
-        //         if (element.mimetype === 'image/jpeg' && element.size >= 750000) {
-        //             sharp(`public/drive/${pathName}/${currentDate}${element.name}`)
-        //                 .jpeg({quality: 80})
-        //                 .toFile('public/drive/sharp/'+element.name)
-        //                 .then()
-        //         } else {
-        //             element.mv('public/drive/sharp/'+element.name);
-        //         }
-        //         attachmentsFilesSharp.push({
-        //             filename: element.name,
-        //             path: 'public/drive/sharp/'+element.name
+        // if (req.files) {
+        //     if (req.files.file.length > 1) {
+        //         req.files.file.forEach(element => {
+        //             if (element.mimetype === 'image/jpeg' && element.size >= 750000) {
+        //                 sharp(`public/drive/${pathName}/${currentDate}${element.name}`)
+        //                     .jpeg({quality: 80})
+        //                     .toFile('public/drive/sharp/'+element.name)
+        //                     .then()
+        //             } else {
+        //                 element.mv('public/drive/sharp/'+element.name);
+        //             }
+        //             attachmentsFilesSharp.push({
+        //                 filename: element.name,
+        //                 path: 'public/drive/sharp/'+element.name
+        //             });
         //         });
-        //     });
-        // } else {
-        //     if (req.files.file.mimetype === 'image/jpeg' && req.files.file.size >= 750000) {
-        //             sharp(`./public/drive/${pathName}/${currentDate}${req.files.file.name}`)
-        //                 .jpeg({quality: 80})
-        //                 .toFile('./public/drive/sharp/'+req.files.file.name)
-        //                 .then()
-        //         } else {
-        //             req.files.file.mv('public/drive/sharp/'+req.files.file.name);
-        //         }
-        //         attachmentsFilesSharp.push({
-        //             filename: req.files.file.name,
-        //             path: 'public/drive/sharp/'+req.files.file.name
-        //         });
+        //     } else {
+        //         if (req.files.file.mimetype === 'image/jpeg' && req.files.file.size >= 750000) {
+        //                 sharp(`./public/drive/${pathName}/${currentDate}${req.files.file.name}`)
+        //                     .jpeg({quality: 80})
+        //                     .toFile('./public/drive/sharp/'+req.files.file.name)
+        //                     .then()
+        //             } else {
+        //                 req.files.file.mv('public/drive/sharp/'+req.files.file.name);
+        //             }
+        //             attachmentsFilesSharp.push({
+        //                 filename: req.files.file.name,
+        //                 path: 'public/drive/sharp/'+req.files.file.name
+        //             });
+        //     }
         // }
         
         let mailOptions = {

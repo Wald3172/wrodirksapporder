@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Hello,</p>
+    <p>{{text}} {{sb}} {{cot}} {{number}} - TDF {{tdf}}.</p>
+    {{#if comment}}
+        <p>{{comment}}</p>
+    {{/if}}
+    <p>Please note.</p>
+    
+    <span style="color: rgb(31, 73, 125)"><br>Kind regards</span>    
+        {{#if user}}<br><br>{{user}}{{/if}} 
+    <span style="color: rgb(31, 73, 125)">
+        <br>Order Management
+        <br><br>DIRKS Polska Sp. zo.o.
+        <br>ul. Wrocławska 36
+        <br>Wojkowice, 55-020 Żórawina
+        <br><br>tel: <a href="tel:+48717367730">+48 717 36 77 30</a>
+        {{#if email}}
+        <br>e-mail: <a href="mailto:{{email}}">{{email}}</a>
+        {{else}}
+        <br>e-mail: <a href="mailto:order.wro@dirks-group.de">order.wro@dirks-group.de</a>
+        {{/if}}
+    </span>  
+</body>
+</html>

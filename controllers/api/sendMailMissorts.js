@@ -10,15 +10,10 @@ const CryptoJS = require('crypto-js');
 const fs = require('fs');
 // const sharp = require('sharp');
 
-const sendMailSpareParts = async (req, res) => {
-    const { app_name, cot, number, tdf, qty, comment } = req.body; 
+const sendMailMissorts = async (req, res) => {
+    const { app_name, date, number, tdf, qty, comment } = req.body; 
 
-    let text = '';
-    if (qty === '1 pallet') {
-        text = `${qty} "Spare parts" was loaded on`
-    } else {
-        text = `${qty} "Spare parts" were loaded on`
-    }
+    console.log(req.body);
 
     const title = 'WRO Dirks App | Order';
     const pageHeader = 'Order Management';
@@ -27,8 +22,10 @@ const sendMailSpareParts = async (req, res) => {
     // const currentDate = ''+new Date().getFullYear()+(new Date().getMonth()+1)+new Date().getDate()+'_'+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+'_';
     // const pathName = 'zwroty';
     let attachmentsFilesSharp = [];
+    let attachment = '';
 
     if (req.files) {
+        attachment = "Photo attached.";
         if (req.files.file.length > 1) {
             req.files.file.forEach(element => {
                 element.mv(`public/drive/sharp/${element.name}`);
@@ -76,16 +73,15 @@ const sendMailSpareParts = async (req, res) => {
     try {
         conn = await pool.getConnection();
 
-        const selectTo = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'to'", [app_name]);
-        const selectCc = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'cc'", [app_name]);
-        const selectSB = await conn.query("SELECT sb FROM list_of_cot WHERE cot = ?", [cot]);
+        const selectTo = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and cot = 'DHL_DE' and param = 'to'", [app_name]);
+        const selectCc = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and cot = 'DHL_DE' and param = 'cc'", [app_name]);
 
         links = await conn.query("SELECT app_name, href, img FROM apps WHERE app_type = 'link' order by priority");
 
         let to = [];
             cc = [];
             
-        const subject = `Spare parts ${cot}`;
+        const subject = `DHL missorts, TDF ${tdf}`;
 
         for (i=0; i<selectCc.length; i++) {
             cc.push(selectCc[i].value)
@@ -167,12 +163,12 @@ const sendMailSpareParts = async (req, res) => {
                 user: userOutlook,
                 hrefRedirect: hrefRedirect,
                 email: user,
-                cot: cot,
                 number: number,
                 tdf: tdf,
-                text: text,
+                qty: qty,
                 comment: comment,
-                sb: selectSB[0].sb
+                date: date,
+                attachment: attachment
             },
             attachments: attachmentsFilesSharp
         };
@@ -211,4 +207,4 @@ const sendMailSpareParts = async (req, res) => {
     }
 }
 
-module.exports = sendMailSpareParts;
+module.exports = sendMailMissorts;

@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+{{> head}}
+<body>
+{{> header}} 
+{{> modal}}
+{{!-- nagłowek strony --}}
+<div class="container-fluid page-header">
+	<h3>{{pageHeader}}</h3>
+</div>
+<div class="container-fluid main-container container-height">
+	{{!-- linki do innych stron --}}
+	{{> sidebar}}
+	{{!-- narzędzia --}}
+	<div class="content content__wrapper">
+		<div class="content__btns">
+			<div class="" data-bs-toggle="modal" data-bs-target="#modal-kamag" id="kamag">
+				<button class="btn btn-primary content__btn">Nowe zgłoszenie</button>
+			</div>
+			<div class="content__btns_wrapper">
+				<button class="btn btn-secondary content__btn">Kamag 1</button>
+				<button class="btn btn-secondary content__btn">Kamag 2</button>
+				<button class="btn btn-secondary content__btn">Kamag 3</button>
+			</div>
+		</div>
+		<div class="content__content"></div>
+	</div>
+</div>
+
+{{!-- modal - nowe zgłoszenie --}}
+	<div class="modal fade" id="modal-kamag" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">Zgłoszenie usterek Kamag</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/sendMailDefectKamag" method="post" enctype="multipart/form-data">
+					<div class="modal-body">
+						<input class="displayNone" type="text" name="app_name" value="defect_kamag">
+						<div class="mb-3">
+							<label for="date" class="form-label"><b>Wybierz Kamag:</b></label>
+							<select class="form-select" aria-label="Default select example" id="kamag_number" name="kamag">
+								<option selected>Kamag 1</option>
+								<option selected>Kamag 2</option>
+								<option selected>Kamag 3</option>
+							</select>
+						</div>
+						<div class="mb-3">
+							<label class="form-label"><b>Zaznacz usterki:</b></label>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Nie działają światła obrysowe po lewej stronie" id="checkbox_01">
+								<label class="form-check-label" for="checkbox_01">
+									Nie działają światła obrysowe po lewej stronie
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Nie działają światła obrysowe po prawej stronie" id="checkbox_02">
+								<label class="form-check-label" for="checkbox_02">
+									Nie działają światła obrysowe po prawej stronie
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Nie działają światła pozycyjne tylne po lewej stronie" id="checkbox_03">
+								<label class="form-check-label" for="checkbox_03">
+									Nie działają światła pozycyjne tylne po lewej stronie
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Nie działają światła pozycyjne tylne po prawej stronie" id="checkbox_04">
+								<label class="form-check-label" for="checkbox_04">
+									Nie działają światła pozycyjne tylne po prawej stronie
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Nie pompują się poduszki powietrzne z tylu" id="checkbox_05">
+								<label class="form-check-label" for="checkbox_05">
+									Nie pompują się poduszki powietrzne z tylu
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Nie pompują się poduszki powietrzne z przodu" id="checkbox_06">
+								<label class="form-check-label" for="checkbox_06">
+									Nie pompują się poduszki powietrzne z przodu
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Zacięło się siodło" id="checkbox_07">
+								<label class="form-check-label" for="checkbox_07">
+									Zacięło się siodło
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Problem z zaworem powietrznym" id="checkbox_08">
+								<label class="form-check-label" for="checkbox_08">
+									Problem z zaworem powietrznym
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Wycieka olej" id="checkbox_09">
+								<label class="form-check-label" for="checkbox_09">
+									Wycieka olej
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Nie odblokowuje się zaczep, zabezpieczający kontenery" id="checkbox_10">
+								<label class="form-check-label" for="checkbox_10">
+									Nie odblokowuje się zaczep, zabezpieczający kontenery
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Komunikat 130 - usterka sprzęgu siodłowego" id="checkbox_11">
+								<label class="form-check-label" for="checkbox_11">
+									Komunikat 130 "Usterka sprzęgu siodłowego"
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Nie działa gniazdo zapalniczki" id="checkbox_12">
+								<label class="form-check-label" for="checkbox_12">
+									Nie działa gniazdo zapalniczki
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Wyciek powietrza z układu pneumatycznego" id="checkbox_13">
+								<label class="form-check-label" for="checkbox_13">
+									Wyciek powietrza z układu pneumatycznego
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Wycieka płyn" id="checkbox_14">
+								<label class="form-check-label" for="checkbox_14">
+									Wycieka płyn
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Nie działa kogut ostrzegawczy" id="checkbox_15">
+								<label class="form-check-label" for="checkbox_15">
+									Nie działa kogut ostrzegawczy
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Nie działa wentylator od klimatyzacji" id="checkbox_16">
+								<label class="form-check-label" for="checkbox_16">
+									Nie działa wentylator od klimatyzacji
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="checkbox" name="defect" value="Problem z układem kierowniczym" id="checkbox_17">
+								<label class="form-check-label" for="checkbox_17">
+									Problem z układem kierowniczym
+								</label>
+							</div>
+						</div>
+						<div class="form-check mt-3">
+							<input class="form-check-input" type="checkbox" value="checked" id="other_option" name="other_option" onclick="toggle('input-add-other_option', 'other_option')">
+							<label class="form-check-label" for="other_option">
+								Inna usterka
+							</label>
+						</div>
+						<div class="form-check displayNone mt-2" id="input-add-other_option">
+							<input class="col-12" type="text" class="form-control" id="option" name="option" aria-describedby="emailHelp" style="padding: 0 12px;">
+						</div>
+						<div class="mt-5">
+							<input class="form-control form-control-sm" type="file" name="file" multiple>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionMissorts" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionMissorts', 'btnDisabledMissorts')">Wyślij</button>
+						<button id="btnDisabledMissorts" type="submit" class="btn btn-primary displayNone" disabled>Wysyłanie...</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
+{{> footer}}
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="/js/order.js"></script>
+
+</body>
+</html>

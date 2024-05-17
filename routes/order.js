@@ -71,6 +71,31 @@ router.get('/order/capacity', access, selectApps, selectUserData, (req, res) => 
     }
 });
 
+router.get('/order/kamag', access, selectApps, selectUserData, (req, res) => {
+    if (req.user) {
+        const title = 'WRO Dirks App | Capacity';
+        const pageHeader = "Usterki Kamag";
+        const footerDepartName = "Order Management";
+        const breadcrumbs = [
+            {
+                name: 'Order Management',
+                href: '/order'
+            }
+        ];
+        const links = req.links;
+        const cotTrailer = req.cotTrailer;
+        const cotSB = req.cotSB;
+        const dateDefault = new Date().toISOString().substr(0, 10);
+        const user = req.user;
+        const passOut = req.passOut;
+        const admin = req.admin;
+        const qtyUnconfirmedUsers = req.qtyUnconfirmedUsers;
+        res.render('kamag', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, dateDefault, footerDepartName, user, passOut, admin, qtyUnconfirmedUsers})
+    } else {
+        res.redirect('/home')
+    }
+});
+
 router.get('/order/grafik_outbound', access, selectApps, selectUserData, (req, res) => {
     if (req.user) {
         const title = 'WRO Dirks App | Grafik Outbound';

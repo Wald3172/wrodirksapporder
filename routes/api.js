@@ -17,6 +17,8 @@ const sendMailZwroty = require('../controllers/api/sendMailZwroty');
 const sendMailSpareParts = require('../controllers/api/sendMailSpareParts');
 const sendMailMissorts = require('../controllers/api/sendMailMissorts');
 const sendMailDefectKamag = require('../controllers/api/sendMailDefectKamag');
+const deleteRecordKamag = require('../controllers/api/deleteRecordKamag');
+const confirmRecordKamag = require('../controllers/api/confirmRecordKamag');
 
 const selectCapacity = require('../controllers/order/selectCapacity');
 const updateCapacity = require('../controllers/order/updateCapacity');
@@ -38,6 +40,8 @@ router.post('/api/sendMailZwroty', sendMailZwroty);
 router.post('/api/sendMailSpareParts', sendMailSpareParts);
 router.post('/api/sendMailMissorts', sendMailMissorts);
 router.post('/api/sendMailDefectKamag', sendMailDefectKamag);
+router.post('/api/deleteRecordKamag', deleteRecordKamag);
+router.post('/api/confirmRecordKamag', confirmRecordKamag);
 
 router.post('/order/selectCapacity', selectCapacity);
 router.post('/order/updateCapacity', updateCapacity);

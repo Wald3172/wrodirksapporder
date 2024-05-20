@@ -3,6 +3,7 @@ const router = express.Router();
 const access = require('../controllers/auth/access');
 const selectApps = require('../controllers/order/selectApps');
 const selectUserData = require('../controllers/order/selectUserData');
+const selectKamagDefects = require('../controllers/order/selectKamagDefects');
 
 router.get('/order', access, selectApps, selectUserData, (req, res) => {
     if (req.user) {
@@ -71,7 +72,7 @@ router.get('/order/capacity', access, selectApps, selectUserData, (req, res) => 
     }
 });
 
-router.get('/order/kamag', access, selectApps, selectUserData, (req, res) => {
+router.get('/order/kamag', access, selectApps, selectUserData, selectKamagDefects, (req, res) => {
     if (req.user) {
         const title = 'WRO Dirks App | Capacity';
         const pageHeader = "Usterki Kamag";
@@ -89,8 +90,10 @@ router.get('/order/kamag', access, selectApps, selectUserData, (req, res) => {
         const user = req.user;
         const passOut = req.passOut;
         const admin = req.admin;
+        const defectsNoted = req.defectsNoted;
+        const defectsRepaired = req.defectsRepaired;
         const qtyUnconfirmedUsers = req.qtyUnconfirmedUsers;
-        res.render('kamag', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, dateDefault, footerDepartName, user, passOut, admin, qtyUnconfirmedUsers})
+        res.render('kamag', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, dateDefault, footerDepartName, user, passOut, admin, qtyUnconfirmedUsers, defectsNoted, defectsRepaired})
     } else {
         res.redirect('/home')
     }

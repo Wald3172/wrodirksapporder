@@ -10,7 +10,6 @@
 </div>
 <div class="container-fluid main-container container-height">
 	<div class="left-sidebar">
-		<div class="section-header">&mdash; Menu &mdash;</div>
 		<a class="left-sidebar__link left-sidebar__link_tac" href="/profile">Dane kontaktowe</a>
 		<a class="left-sidebar__link left-sidebar__link_tac" href="/profileOutlook">Polączenie z Outlook</a>
 		{{#if admin}}
@@ -19,7 +18,7 @@
 	</div>
 	<div class="content profile">
 		{{#if unconfirmedUsers}}
-		<div class="section-header">&mdash; Zarządzanie niepotwierdzonymi kontami &mdash;</div>
+		<div class="section-header">Zarządzanie niepotwierdzonymi kontami</div>
 		<table class="table table-striped table-bordered border-secondary mt25">
 			<thead>
 				<tr style="text-align: center;">
@@ -50,8 +49,8 @@
 							<input type="text" value="{{this.email}}" id="{{this.id}}_email" class="form-control form-control-sm" disabled>
 						</div></td>
 						<td>
-							<button id="{{this.id}}" type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-confirmAccount" onclick="openModalConfirmUser(this.id)">Potwierdzić konto</button>
-							<button id="{{this.id}}" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-deleteAccount" onclick="openModalDeleteUser(this.id)">Usunąć konto</button>
+							<button id="{{this.id}}" type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-confirmAccount" onclick="openModalConfirmUser(this.id)">Potwierdzić konto</button>
+							<button id="{{this.id}}" type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-deleteAccount" onclick="openModalDeleteUser(this.id)">Usunąć konto</button>
 						</td>
 					</tr>
 				{{/each}}
@@ -59,7 +58,7 @@
 		</table>
 		{{/if}}
 		{{#if allUsers}}
-		<div class="section-header {{#if unconfirmedUsers}}mt-5{{/if}}">&mdash; Zarządzanie potwierdzonymi kontami &mdash;</div>
+		<div class="section-header {{#if unconfirmedUsers}}mt-5{{/if}}">Zarządzanie potwierdzonymi kontami</div>
 		<table class="table table-striped table-bordered border-secondary mt25">
 			<thead>
 				<tr style="text-align: center;">
@@ -69,7 +68,7 @@
 					<th scope="col">Nazwisko</th>
 					<th scope="col">Email</th>
 					<th scope="col" style="width: 100px;">Rola</th>
-					<th scope="col">Opcje</th>
+					<th scope="col" style="width: 240px;">Opcje</th>
 				</tr>
 			</thead>
 			<tbody>
@@ -94,8 +93,8 @@
 							<input type="text" value="{{this.role}}" id="{{this.id}}_role" class="form-control form-control-sm" disabled>
 						</div></td>
 						<td>
-							<button id="{{this.id}}" type="button" class="btn btn-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-changeAccount" onclick="openModalChangeUser(this.id)">Zmienić konto</button>
-							<button id="{{this.id}}" type="button" class="btn btn-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-deleteAccount" onclick="openModalDeleteUser(this.id)">Usunąć konto</button>
+							<button id="{{this.id}}" type="button" class="btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-changeAccount" onclick="openModalChangeUser(this.id)">Zmienić konto</button>
+							<button id="{{this.id}}" type="button" class="btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-deleteAccount" onclick="openModalDeleteUser(this.id)">Usunąć konto</button>
 						</td>
 					</tr>
 				{{/each}}

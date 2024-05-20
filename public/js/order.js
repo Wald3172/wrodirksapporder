@@ -48,3 +48,25 @@ function viewPassword(inputId) {
         input.type = 'password';
     }
 } 
+
+function changeData() {
+    const myDate = document.querySelectorAll('.myDate');
+    myDate.forEach(element => {
+        if (element.innerText) {
+            let date = new Date(element.innerText);
+            function addLeadingZero(num) {
+                return num < 10 ? '0' + num : num;
+            }
+            let day = addLeadingZero(date.getDate());
+            let month = addLeadingZero(date.getMonth() + 1);
+            let year = date.getFullYear();
+            let hours = addLeadingZero(date.getHours());
+            let minutes = addLeadingZero(date.getMinutes());
+            let seconds = addLeadingZero(date.getSeconds());
+            let formattedDate = `${day}.${month}.${year} ${hours}:${minutes}:${seconds}`;
+            element.innerText = formattedDate;
+        }
+    });
+}
+
+changeData();

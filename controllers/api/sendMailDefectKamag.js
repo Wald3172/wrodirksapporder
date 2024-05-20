@@ -91,21 +91,17 @@ const sendMailDefectKamag = async (req, res) => {
             await conn.query("INSERT INTO usterki_kamag (kamag, defect, status, notification_login) VALUES (?, ?, 'zgłoszone', ?)", [kamag, option, userOutlook]);
         }
 
-        // defect.forEach(element => {
-            
-        // });
-
-        let to = ['vyakovenko@dirks-group.de'];
+        let to = [];
             cc = [];
             
         const subject = `Usterka - ${kamag}`;
 
-        // for (i=0; i<selectCc.length; i++) {
-        //     cc.push(selectCc[i].value)
-        // }
-        // for (i=0; i<selectTo.length; i++) {
-        //     to.push(selectTo[i].value)
-        // }
+        for (i=0; i<selectCc.length; i++) {
+            cc.push(selectCc[i].value)
+        }
+        for (i=0; i<selectTo.length; i++) {
+            to.push(selectTo[i].value)
+        }
 
         if (conn) conn.end();
 

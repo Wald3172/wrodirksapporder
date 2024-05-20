@@ -10,7 +10,6 @@
 </div>
 <div class="container-fluid main-container container-height">
 	<div class="left-sidebar">
-		<div class="section-header">&mdash; Menu &mdash;</div>
 		<a class="left-sidebar__link left-sidebar__link_tac" href="/profile">Dane kontaktowe</a>
 		<a class="left-sidebar__link left-sidebar__link_tac" href="/profileOutlook">Polączenie z Outlook</a>
 		{{#if admin}}
@@ -19,7 +18,7 @@
 	</div>
 	{{#if firstName}}
 	<div class="content profile">
-		<div class="section-header">&mdash; Dane kontaktowe &mdash;</div>
+		<div class="section-header">Dane kontaktowe</div>
 		<form class="profile__form" action="/api/saveUserData" method="post">
 			<div class="mb-3">
 				<label for="firstName" class="form-label">Imię</label>
@@ -37,7 +36,7 @@
 	</div>
 	{{else}}
 	<div class="content profile">
-		<div class="section-header">&mdash; Polączenie konta z Outlook &mdash;</div>
+		<div class="section-header">Polączenie konta z Outlook</div>
 		<form class="profile__form" action="/api/saveUserOutPass" method="post">
 			<div class="mb-3">
 				<label for="passOut" class="form-label">Hasło do Twojego konta dirks-group.de</label>

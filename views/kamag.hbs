@@ -14,16 +14,107 @@
 	{{!-- narzędzia --}}
 	<div class="content content__wrapper">
 		<div class="content__btns">
-			<div class="" data-bs-toggle="modal" data-bs-target="#modal-kamag" id="kamag">
+			<div data-bs-toggle="modal" data-bs-target="#modal-kamag" id="kamag">
 				<button class="btn btn-primary content__btn">Nowe zgłoszenie</button>
 			</div>
 			<div class="content__btns_wrapper">
-				<button class="btn btn-secondary content__btn">Kamag 1</button>
-				<button class="btn btn-secondary content__btn">Kamag 2</button>
-				<button class="btn btn-secondary content__btn">Kamag 3</button>
+				<select id="selectKamag" class="form-select" style="width: 140px;">
+					<option selected value="Kamag 1">Kamag 1</option>
+					<option value="Kamag 2">Kamag 2</option>
+					<option value="Kamag 3">Kamag 3</option>
+				</select>
+				<select id="selectStatus" class="form-select" style="width: 140px;">
+					<option selected value="all">Wszystko</option>
+					<option value="zgłoszone">Zgłoszone</option>
+					<option value="naprawione">Naprawione</option>
+				</select>
+				<button class="btn btn-outline-secondary content__btn-small" onclick="filterKamagTable()">Filtruj</button>
+				<a href="/order/kamag">
+					<button class="btn btn-outline-danger content__btn-small">Usunąć filtr</button>
+				</a>
 			</div>
 		</div>
-		<div class="content__content"></div>
+		<div class="content__content">
+			<div class="section-header">Zgłoszenia</div>
+			<table class="table table-striped table-bordered border-secondary mt25">
+				<thead>
+					<tr style="text-align: center;">
+						<th scope="col" style="width: 60px;">#id</th>
+						<th scope="col" style="width: 100px;">Kamag</th>
+						<th scope="col">Usterka</th>
+						<th scope="col" style="width: 240px;">Zgłoszenie</th>
+						<th scope="col" style="width: 100px;">Status</th>
+						<th scope="col" style="width: 240px;">Naprawione</th>
+						<th scope="col" style="width: 200px;">Opcje</th>
+					</tr>
+				</thead>
+				<tbody>
+					{{#each defectsNoted}}
+						<tr style="text-align: center;">
+							<th>{{this.id}}</th>
+							<td class="kamag">{{this.kamag}}</td>
+							<td>{{this.defect}}</td>
+							<td>
+								<div class="col-auto myDate">
+									{{this.notification_date_and_time}}
+								</div>
+								<div class="col-auto mt-3" style="font-size: 14px;">
+									Zgłosił: {{notification_login}}
+								</div>
+							</td>
+							<td class="status">{{this.status}}</td>
+							<td>
+								<div class="col-auto myDate">
+									{{this.repair_date_and_time}}
+								</div>
+								<div class="col-auto mt-3" style="font-size: 14px;">
+									{{#if repair_login}}
+										Potwierdził: {{repair_login}}
+									{{/if}}
+								</div>
+							</td>
+							<td>
+								<div class="btnGroupInTable">
+									<button id="{{this.id}}" type="button" class="btnGroupInTable__oneBtn btn btn-outline-primary btn-sm" data-bs-toggle="modal" data-bs-target="#modal-confirmRecord" onclick="openModalConfirmRecord(this.id)">Potwierdzić naprawę</button>
+									<button id="{{this.id}}" type="button" class="btnGroupInTable__oneBtn btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-deleteRecord" onclick="openModalDeleteRecord(this.id)">Usunąć wpis</button>
+								</div>
+							</td>
+						</tr>
+					{{/each}}
+					{{#each defectsRepaired}}
+						<tr class="table-success" style="text-align: center;">
+							<th>{{this.id}}</th>
+							<td class="kamag">{{this.kamag}}</td>
+							<td>{{this.defect}}</td>
+							<td>
+								<div class="col-auto myDate">
+									{{this.notification_date_and_time}}
+								</div>
+								<div class="col-auto mt-3" style="font-size: 14px;">
+									Zgłosił: {{notification_login}}
+								</div>
+							</td>
+							<td class="status">{{this.status}}</td>
+							<td>
+								<div class="col-auto myDate">
+									{{this.repair_date_and_time}}
+								</div>
+								<div class="col-auto mt-3" style="font-size: 14px;">
+									{{#if repair_login}}
+										Potwierdził: {{repair_login}}
+									{{/if}}
+								</div>
+							</td>
+							<td>
+								<div class="btnGroupInTable">
+									<button id="{{this.id}}" type="button" class="btnGroupInTable__oneBtn btn btn-outline-danger btn-sm" data-bs-toggle="modal" data-bs-target="#modal-deleteRecord" onclick="openModalDeleteRecord(this.id)">Usunąć wpis</button>
+								</div>
+							</td>
+						</tr>
+					{{/each}}
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
 
@@ -174,10 +265,56 @@
 		</div>
 	</div>
 
+	{{!-- delete record --}}
+	<div class="modal fade" id="modal-deleteRecord" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header bg-danger">
+					<h5 class="modal-title" id="confirmAccount-header">Usunięcie wpisu</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/deleteRecordKamag" method="post">
+					<div class="modal-body">
+						<p id="modalTextDelete" class="modal-text">Czy na pewno chcesz usunąć ten wpis?</p>
+						<input id="modalUserIdDelete" class="displayNone" type="text" name="id">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+						<button id="btnActionDeleteRecord" type="submit" class="btn btn-danger" onclick="btnDisable('btnActionDeleteRecord', 'btnDisabledDeleteRecord')">Tak</button>
+						<button id="btnDisabledDeleteRecord" type="submit" class="btn btn-danger displayNone" disabled>Usuwanie...</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{{!-- confirm record --}}
+	<div class="modal fade" id="modal-confirmRecord" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header bg-primary">
+					<h5 class="modal-title" id="confirmAccount-header">Potwierdzenie naprawy usterki</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/confirmRecordKamag" method="post">
+					<div class="modal-body">
+						<p id="modalTextDelete" class="modal-text">Czy na pewno chcesz potwierdzić naprawę?</p>
+						<input id="modalUserIdConfirm" class="displayNone" type="text" name="id">
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Nie</button>
+						<button id="btnActionConfirmRecord" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionConfirmRecord', 'btnDisabledConfirmRecord')">Tak</button>
+						<button id="btnDisabledConfirmRecord" type="submit" class="btn btn-primary displayNone" disabled>Usuwanie...</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+
 {{> footer}}
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 <script src="/js/order.js"></script>
+<script src="/js/kamag.js"></script>
 
 </body>
 </html>

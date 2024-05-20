@@ -29,7 +29,6 @@ function openModalDeleteUser (id) {
 }
 
 function openModalChangeUser (id) {
-    
     const modalUserId = document.getElementById('modalUserIdChange');
     const modalUser = document.getElementById('modalUserChange');
     const modalName = document.getElementById('modalNameChange');

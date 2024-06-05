@@ -72,8 +72,8 @@ const sendMailDefectKamag = async (req, res) => {
     try {
         conn = await pool.getConnection();
 
-        const selectTo = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and cot = 'DHL_DE' and param = 'to'", [app_name]);
-        const selectCc = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and cot = 'DHL_DE' and param = 'cc'", [app_name]);
+        const selectTo = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'to'", [app_name]);
+        const selectCc = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'cc'", [app_name]);
 
         links = await conn.query("SELECT app_name, href, img FROM apps WHERE app_type = 'link' order by priority");
 

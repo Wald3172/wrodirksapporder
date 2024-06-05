@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Dzień dobry,</p>
+    <p>W DTRS wprowadzono następujące zmiany:</p>
+    {{#if data}}
+    <table style="border-collapse: collapse; border-spacing: 0; border: 1px solid rgb(0, 0, 0)">
+        <tr>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Data i godzina</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Box</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Mapped from</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Payload min</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Paylaod max</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Type</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Limit</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Active</th>
+        </tr>
+        {{#each data}}
+        <tr>
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.timestamp}}</td>
+            {{!-- <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.data}}</td> --}}
+            {{#each this.data}}
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this}}</td>
+            {{/each}}
+        </tr>
+        {{/each}}
+    </table>
+    {{/if}}
+    <br>
+    <br>
+    <span style="color: rgb(31, 73, 125)">
+        Mail zostal wygenerowany automatycznie
+    </span>  
+</body>
+</html>

@@ -28,10 +28,13 @@ app.use((req, res) => {
     res.send('error 404')
 });
 
-// parsing
+// auto sending
 const DTRSchanges = require('./controllers/apps/DTRSchanges');
-const interval = 2 * 60 * 1000; //2 min
-setInterval(DTRSchanges, interval);
+const DTRSchangesAllDay = require('./controllers/apps/DTRSchangesAllDay');
+setInterval(DTRSchanges, 120000); 
+// DTRSchangesAllDay();
+// DTRSchanges();
+
 
 // start app
 const startApp = async () => {

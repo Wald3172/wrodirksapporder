@@ -6,20 +6,29 @@ const path = require('path');
 const pool = require('../../config/dbConfig');
 const addOneSecond = require('../helpers/addOneSecond');
 
-const DTRSchanges = async() => {
+const DTRSchangesAllDay = async() => {
     let conn;
     try {
         conn = await pool.getConnection();
-        let lastDateAndTime = await conn.query("SELECT myValue FROM info WHERE myKey = 'DTRSchanges'"); 
+        // let lastDateAndTime = await conn.query("SELECT myValue FROM info WHERE myKey = 'DTRSchangesAllDay'"); 
 
         const now = new Date();
-        const year = now.getFullYear();
-        const month = String(now.getMonth() + 1).padStart(2, '0');
-        const day = String(now.getDate()).padStart(2, '0');
-        const timestampStart = lastDateAndTime[0].myValue.replace(' ', '%20');
-        // const timestampStart = '2024-06-07%2014:20:00';
-        const timestampEnd = `${year}-${month}-${day}%2023:59:59`;
+        const yearEnd = now.getFullYear();
+        const monthEnd = String(now.getMonth() + 1).padStart(2, '0');
+        const dayEnd = String(now.getDate()).padStart(2, '0');
+
+        const today = new Date();
+        today.setDate(today.getDate() - 1);
+        const yearStart = today.getFullYear();
+        const monthStart = String(today.getMonth() + 1).padStart(2, '0');  
+        const dayStart = String(today.getDate()).padStart(2, '0');
+
+        const timestampStart = `${yearStart}-${monthStart}-${dayStart}%2000:00:00`;
+        const timestampEnd = `${yearEnd}-${monthEnd}-${dayEnd}%2002:59:59`;
         
+        console.log(timestampStart);
+        console.log(timestampEnd);
+
         const url = `http://dg150ap03:8080/DTClone/log?level=INFO&from=${timestampStart}&to=${timestampEnd}`;
     
         axios.get(url)
@@ -43,15 +52,12 @@ const DTRSchanges = async() => {
                                 data[i] = data[i].replace('payload max: ','');
                             }
                             else if (i === 4) {
-                                data[i] = data[i].replace('type: ','');
+                                data[i] = data[i].replace('type=','');
                             }
                             else if (i === 5) {
-                                data[i] = data[i].replace('packing: ','');
-                            }
-                            else if (i === 6) {
                                 data[i] = data[i].replace('limit: ','');
                             }
-                            else if (i === 7) {
+                            else if (i === 6) {
                                 data[i] = data[i].replace('active=: ','');
                             }
                         }
@@ -68,7 +74,7 @@ const DTRSchanges = async() => {
                             mapLimits.push(element);
                         }
                     });
-
+            
                     let transporter = nodemailer.createTransport({
                         host: process.env.NODEMAILER_HOST,
                         port: process.env.NODEMAILER_PORT,
@@ -92,9 +98,10 @@ const DTRSchanges = async() => {
                     let mailOptions = {
                         priority: 'normal',
                         from: process.env.NODEMAILER_AUTH_USER,
-                        to: 'order.wro@dirks-group.de',
+                        // to: 'order.wro@dirks-group.de',
+                        to: 'vyakovenko@dirks-group.de',
                         cc: '',
-                        subject: 'Zmiany w ustawieniach DTRS',
+                        subject: `Zmiany w ustawieniach DTRS z dnia ${day}.${month}.${year}` ,
                         template: 'DTRSchanges',
                         context: {
                             boxes: boxes,
@@ -102,17 +109,17 @@ const DTRSchanges = async() => {
                         }
                     };
                     
-                    transporter.sendMail(mailOptions, (error, info) => {
-                        if (error) {
-                        console.log('Email error ---> ' + error);
-                        } else {
-                        console.log('Email sent ---> ' + info.response);
-                        }
-                    });
+                    // transporter.sendMail(mailOptions, (error, info) => {
+                    //     if (error) {
+                    //     console.log('Email error ---> ' + error);
+                    //     } else {
+                    //     console.log('Email sent ---> ' + info.response);
+                    //     }
+                    // });
 
-                    lastDateAndTime = addOneSecond(objects[objects.length-1].timestamp);
-                    conn.query("UPDATE info SET myValue = ? WHERE myKey = 'DTRSchanges'", [lastDateAndTime]);
-                    console.log(objects);
+                    // lastDateAndTime = addOneSecond(objects[objects.length-1].timestamp);
+                    // conn.query("UPDATE info SET myValue = ? WHERE myKey = 'DTRSchangesAllDay'", [lastDateAndTime]);
+                    // console.log(objects);
                 }   
             })
             .catch(error => {
@@ -125,4 +132,4 @@ const DTRSchanges = async() => {
     }
 }
 
-module.exports = DTRSchanges;
+module.exports = DTRSchangesAllDay;

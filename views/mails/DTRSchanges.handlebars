@@ -8,7 +8,7 @@
 <body>
     <p>Dzień dobry,</p>
     <p>W DTRS wprowadzono następujące zmiany:</p>
-    {{#if data}}
+    {{#if boxes}}
     <table style="border-collapse: collapse; border-spacing: 0; border: 1px solid rgb(0, 0, 0)">
         <tr>
             <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Data i godzina</th>
@@ -17,13 +17,30 @@
             <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Payload min</th>
             <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Paylaod max</th>
             <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Type</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Packing</th>
             <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Limit</th>
             <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Active</th>
         </tr>
-        {{#each data}}
+        {{#each boxes}}
         <tr>
             <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.timestamp}}</td>
-            {{!-- <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.data}}</td> --}}
+            {{#each this.data}}
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this}}</td>
+            {{/each}}
+        </tr>
+        {{/each}}
+    </table>
+    {{/if}}
+    <br>
+    {{#if mapLimits}}
+    <table style="border-collapse: collapse; border-spacing: 0; border: 1px solid rgb(0, 0, 0)">
+        <tr>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Data i godzina</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Zmiana</th>
+        </tr>
+        {{#each mapLimits}}
+        <tr>
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.timestamp}}</td>
             {{#each this.data}}
             <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this}}</td>
             {{/each}}

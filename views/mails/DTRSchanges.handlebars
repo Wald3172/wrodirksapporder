@@ -23,8 +23,8 @@
         </tr>
         {{#each boxes}}
         <tr>
-            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.timestamp}}</td>
-            {{#each this.data}}
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.dateTime}}</td>
+            {{#each this.message}}
             <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this}}</td>
             {{/each}}
         </tr>
@@ -40,8 +40,8 @@
         </tr>
         {{#each mapLimits}}
         <tr>
-            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.timestamp}}</td>
-            {{#each this.data}}
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.dateTime}}</td>
+            {{#each this.message}}
             <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this}}</td>
             {{/each}}
         </tr>

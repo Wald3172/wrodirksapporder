@@ -38,7 +38,6 @@ function checkTimeAndExecute() {
         DTRSchangesAllDay();
     }
   }
-
 setInterval(checkTimeAndExecute, 600000); // 10 min
 setInterval(DTRSchanges, 120000); // 2 min
 

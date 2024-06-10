@@ -3,7 +3,6 @@ const fileUpload = require('express-fileupload');
 const path = require('path');
 const Router = require('./routes/routes');
 const cookie = require('cookie-parser');
-// const isLogIn = require('./controllers/auth/isLogIn');
 const hbs = require('hbs');
 const PORT = process.env.PORT || 8080;
 
@@ -31,10 +30,17 @@ app.use((req, res) => {
 // auto sending
 const DTRSchanges = require('./controllers/apps/DTRSchanges');
 const DTRSchangesAllDay = require('./controllers/apps/DTRSchangesAllDay');
-setInterval(DTRSchanges, 120000); 
-// DTRSchangesAllDay();
-// DTRSchanges();
 
+function checkTimeAndExecute() {
+    const now = new Date();
+    const hours = now.getHours();
+    if (hours >= 2 && hours < 3) {
+        DTRSchangesAllDay();
+    }
+  }
+
+setInterval(checkTimeAndExecute, 600000); // 10 min
+setInterval(DTRSchanges, 120000); // 2 min
 
 // start app
 const startApp = async () => {

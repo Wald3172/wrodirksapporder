@@ -17,7 +17,6 @@ const DTRSchanges = async() => {
         const month = String(now.getMonth() + 1).padStart(2, '0');
         const day = String(now.getDate()).padStart(2, '0');
         const timestampStart = lastDateAndTime[0].myValue.replace(' ', '%20');
-        // const timestampStart = '2024-06-07%2014:20:00';
         const timestampEnd = `${year}-${month}-${day}%2023:59:59`;
         
         const url = `http://dg150ap03:8080/DTClone/log?level=INFO&from=${timestampStart}&to=${timestampEnd}`;
@@ -26,42 +25,47 @@ const DTRSchanges = async() => {
             .then(response => {
                 if (response.data) {
                     const data = response.data;
-                    const lines = data.trim().split('\n');
-                    const objects = lines.map(line => {
-                        const [timestamp, level, source, ...rest] = line.split(', ');
-                        const data = rest.map(item => item.replace(/\r/g, ''));
-                        for (let i = 0; i < data.length; i++) {
-                            if (i === 0) {
-                                data[i] = data[i].replace('Box: ','');
-                            } else if (i === 1) {
-                                data[i] = data[i].replace('mapped from: ','');
+                    const parseData = (data) => {
+                        const lines = data.trim().split('\n');
+                        const objects = lines.map(line => {
+                            const [timestamp, level, source, ...rest] = line.split(', ').map(item => item.trim());
+                            const data = rest.join(', ').replace(/\r/g, '').split(', ');
+                            for (let i = 0; i < data.length; i++) {
+                                if (i === 0) {
+                                    data[i] = data[i].replace('Box: ','');
+                                } else if (i === 1) {
+                                    data[i] = data[i].replace('mapped from:','');
+                                }
+                                else if (i === 2) {
+                                    data[i] = data[i].replace('payload min: ','');
+                                }
+                                else if (i === 3) {
+                                    data[i] = data[i].replace('payload max: ','');
+                                }
+                                else if (i === 4) {
+                                    data[i] = data[i].replace('type: ','');
+                                }
+                                else if (i === 5) {
+                                    data[i] = data[i].replace('packing: ','');
+                                }
+                                else if (i === 6) {
+                                    data[i] = data[i].replace('limit: ','');
+                                }
+                                else if (i === 7) {
+                                    data[i] = data[i].replace('active=: ','');
+                                }
                             }
-                            else if (i === 2) {
-                                data[i] = data[i].replace('payload min: ','');
-                            }
-                            else if (i === 3) {
-                                data[i] = data[i].replace('payload max: ','');
-                            }
-                            else if (i === 4) {
-                                data[i] = data[i].replace('type: ','');
-                            }
-                            else if (i === 5) {
-                                data[i] = data[i].replace('packing: ','');
-                            }
-                            else if (i === 6) {
-                                data[i] = data[i].replace('limit: ','');
-                            }
-                            else if (i === 7) {
-                                data[i] = data[i].replace('active=: ','');
-                            }
-                        }
-                        return { timestamp: timestamp.trim(), level, source, data };
-                    });
+                            return { timestamp: timestamp.replace('T', ' ').replace(',', ''), level, source, data };
+                        });
+                        return objects;
+                      }
+                      
+                    const result = parseData(data);
 
                     let boxes = [];
                     let mapLimits = [];
 
-                    objects.forEach(element => {
+                    result.forEach(element => {
                         if (element.data[0].length < 10) {
                             boxes.push(element);
                         } else {
@@ -110,9 +114,9 @@ const DTRSchanges = async() => {
                         }
                     });
 
-                    lastDateAndTime = addOneSecond(objects[objects.length-1].timestamp);
+                    lastDateAndTime = addOneSecond(result[result.length-1].timestamp);
+                    console.log(lastDateAndTime);
                     conn.query("UPDATE info SET myValue = ? WHERE myKey = 'DTRSchanges'", [lastDateAndTime]);
-                    console.log(objects);
                 }   
             })
             .catch(error => {

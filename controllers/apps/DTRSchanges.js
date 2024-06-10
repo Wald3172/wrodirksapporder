@@ -102,7 +102,7 @@ const DTRSchanges = async() => {
                     }
                 });
 
-                lastDateAndTime = addOneSecond(result[result.length-1].timestamp);
+                lastDateAndTime = addOneSecond(data[data.length-1].dateTime);
                 conn.query("UPDATE info SET myValue = ? WHERE myKey = 'DTRSchanges'", [lastDateAndTime]);
                 if (conn) conn.end();
             }  

@@ -102,7 +102,8 @@ const DTRSchanges = async() => {
                     }
                 });
 
-                conn.query("UPDATE info SET myValue = ? WHERE myKey = 'DTRSchangesAllDay'", [reportDate]);
+                lastDateAndTime = addOneSecond(result[result.length-1].timestamp);
+                conn.query("UPDATE info SET myValue = ? WHERE myKey = 'DTRSchanges'", [lastDateAndTime]);
                 if (conn) conn.end();
             }  
         });

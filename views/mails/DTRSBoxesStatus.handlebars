@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Dzień dobry,</p>
+    <p>Zestawienie tłumaczenia kartonów:</p>
+    {{#if rows}}
+    <table style="border-collapse: collapse; border-spacing: 0; border: 1px solid rgb(0, 0, 0)">
+        <tr>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">LFS name</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Derived from</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Payload min</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Paylaod max</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Size type</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Packing</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Mapping limit, %</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Active</th>
+        </tr>
+        {{#each rows}}
+        <tr>
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.name}}</td>
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.derived}}</td>
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.payloadMin}}</td>
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.payloadMax}}</td>
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.type}}</td>
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.packType}}</td>
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.limit}}</td>
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.active}}</td>
+        </tr>
+        {{/each}}
+    </table>
+    {{/if}}
+    <br>
+    <br>
+    <span style="color: rgb(31, 73, 125)">
+        Mail zostal wygenerowany automatycznie
+    </span>  
+</body>
+</html>

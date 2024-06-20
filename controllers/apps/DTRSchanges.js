@@ -28,11 +28,15 @@ const DTRSchanges = async() => {
                     for (let i = 0; i < element.message.length; i++) {
                         if (i === 0) {
                             element.message[i] = element.message[i].replace('Box: ','');
+                            element.message[i] = element.message[i].replace('Updated Box Map Limit for box: ','');
+                            element.message[i] = element.message[i].replace('and backup box:','--->');
                         } else if (i === 1) {
                             element.message[i] = element.message[i].replace('mapped from:','');
+                            element.message[i] = element.message[i].replace('limit per batch: ','');
                         }
                         else if (i === 2) {
                             element.message[i] = element.message[i].replace('payload min: ','');
+                            element.message[i] = element.message[i].replace('limit per hour: ','');
                         }
                         else if (i === 3) {
                             element.message[i] = element.message[i].replace('payload max: ','');
@@ -44,9 +48,6 @@ const DTRSchanges = async() => {
                             element.message[i] = element.message[i].replace('packing: ','');
                         }
                         else if (i === 6) {
-                            element.message[i] = element.message[i].replace('limit: ','');
-                        }
-                        else if (i === 7) {
                             element.message[i] = element.message[i].replace('active=: ','');
                         }
                     }

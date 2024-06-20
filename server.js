@@ -30,6 +30,7 @@ app.use((req, res) => {
 // auto sending
 const DTRSchanges = require('./controllers/apps/DTRSchanges');
 const DTRSchangesAllDay = require('./controllers/apps/DTRSchangesAllDay');
+const DTRSBoxesStatus = require('./controllers/apps/DTRSBoxesStatus');
 
 function checkTimeAndExecute() {
     const now = new Date();
@@ -41,6 +42,7 @@ function checkTimeAndExecute() {
 setInterval(checkTimeAndExecute, 600000); // 10 min
 setInterval(DTRSchanges, 120000); // 2 min
 
+// DTRSchangesAllDay();
 // start app
 const startApp = async () => {
     try {

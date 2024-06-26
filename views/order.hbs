@@ -96,6 +96,12 @@
 				</div>
 				<p>DHL missorts</p>
 			</div>
+			<div class="content__item" data-bs-toggle="modal" data-bs-target="#modal-boxy" id="boxy">
+				<div class="content__item__img">
+					<img src="/icons/mail.png" alt="img">
+				</div>
+				<p>BOXY repack</p>
+			</div>
 		</div>
 	</div>
 </div>
@@ -492,6 +498,70 @@
 						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
 						<button id="btnActionMissorts" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionMissorts', 'btnDisabledMissorts')">Wyślij</button>
 						<button id="btnDisabledMissorts" type="submit" class="btn btn-primary displayNone" disabled>Wysyłanie...</button>
+					</div>
+				</form>
+			</div>
+		</div>
+	</div>
+	{{!-- kontener/naczepa zwrotów --}}
+	<div class="modal fade" id="modal-boxy" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+		<div class="modal-dialog">
+			<div class="modal-content">
+				<div class="modal-header">
+					<h5 class="modal-title" id="staticBackdropLabel">BOXY repack</h5>
+					<button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+				</div>
+				<form class="modal-form" action="/api/sendMailBoxy" method="post" enctype="multipart/form-data">
+					<div class="modal-body">
+						<input class="displayNone" type="text" name="app_name" value="boxy">
+						<div class="mb-3">
+							<label for="number" class="form-label"><b>Podaj numer kontenera (opcjonalnie):</b></label>
+							<input type="text" class="form-control" id="number" aria-describedby="emailHelp" name="number">
+						</div>
+						<div class="mb-3">
+							<label for="seal" class="form-label"><b>Zaznacz, gdzie odstawili:</b></label>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="location" value="na placu" id="yard" checked>
+								<label class="form-check-label" for="yard">
+									Na placu
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="location" value="na 22 WRO2" id="22wro2">
+								<label class="form-check-label" for="22wro2">
+									22 WRO2
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="location" value="na 23 WRO2" id="23wro2">
+								<label class="form-check-label" for="23wro2">
+									23 WRO2
+								</label>
+							</div>
+							<div class="form-check">
+								<input class="form-check-input" type="radio" name="location" value="na 24 WRO2" id="24wro2">
+								<label class="form-check-label" for="24wro2">
+									24 WRO2
+								</label>
+							</div>
+						</div>
+						<div class="form-check mt-3">
+							<input class="form-check-input" type="checkbox" value="checked" id="checkboxBOXY" name="checkboxBOXY" onclick="toggle('input-add-BOXY', 'checkboxBOXY')">
+							<label class="form-check-label" for="checkboxZWR">
+								Komentarz
+							</label>
+						</div>
+						<div class="form-check displayNone mt-2" id="input-add-BOXY">
+							<input class="col-12" type="text" class="form-control" id="commentBOXY" name="commentBOXY" aria-describedby="emailHelp" style="padding: 0 12px;">
+						</div>
+						<div class="mt-5">
+							<input class="form-control form-control-sm" type="file" name="file" multiple>
+						</div>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Zamknij</button>
+						<button id="btnActionBoxy" type="submit" class="btn btn-primary" onclick="btnDisable('btnActionBoxy', 'btnDisabledBoxy')">Wyślij</button>
+						<button id="btnDisabledBoxy" type="submit" class="btn btn-primary displayNone" disabled>Wysyłanie...</button>
 					</div>
 				</form>
 			</div>

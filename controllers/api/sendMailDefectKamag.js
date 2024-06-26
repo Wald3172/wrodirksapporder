@@ -60,7 +60,9 @@ const sendMailDefectKamag = async (req, res) => {
         const userOut = await conn.query("SELECT first_name, last_name FROM user WHERE id = ?", [decoded.id]);
         const passOut = await conn.query("SELECT pass_out FROM outlook WHERE user_id = ?", [decoded.id]);
 
-        passwordOutlook = CryptoJS.enc.Base64.parse(passOut[0].pass_out).toString(CryptoJS.enc.Utf8);
+        if (!passOut.length === 0) {
+            passwordOutlook = CryptoJS.enc.Base64.parse(passOut[0].pass_out).toString(CryptoJS.enc.Utf8);
+        }
     
         userOutlook = `${userOut[0].first_name} ${userOut[0].last_name}`;
 

@@ -17,12 +17,15 @@ const selectUserData = async (req, res, next) => {
             const user = await conn.query("SELECT first_name, last_name FROM user WHERE id = ?", [decoded.id]);
             const passOut = await conn.query("SELECT pass_out FROM outlook WHERE user_id = ?", [decoded.id])
 
-            const passwordOutlook = CryptoJS.enc.Base64.parse(passOut[0].pass_out).toString(CryptoJS.enc.Utf8);
+            if (!passOut.length === 0) {
+                const passwordOutlook = CryptoJS.enc.Base64.parse(passOut[0].pass_out).toString(CryptoJS.enc.Utf8);
+                req.passOut = passwordOutlook;
+            }
             
             req.user = `${user[0].first_name} ${user[0].last_name}`;
             req.firstName = user[0].first_name;
             req.lastName = user[0].last_name;
-            req.passOut = passwordOutlook;
+            
     
             if (conn) conn.end();
             next();

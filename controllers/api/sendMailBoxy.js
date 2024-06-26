@@ -10,20 +10,15 @@ const CryptoJS = require('crypto-js');
 const fs = require('fs');
 // const sharp = require('sharp');
 
-const sendMailSBCanNotLoad = async (req, res) => {
-    const { app_name, date, cot, trailer, checkbox61, checkbox62, checkbox63, text60 } = req.body; 
-    const title = 'WRO Dirks App | Zgłaszanie naczep/SB';
-    const pageHeader = 'Zgłaszanie naczep/SB';
+const sendMailBoxy = async (req, res) => {
+    const { app_name, number, location, commentBOXY } = req.body; 
+
+    const title = 'WRO Dirks App | Order';
+    const pageHeader = 'Order Management';
     const footerDepartName = "Order Management";
-    const breadcrumbs = [
-        {
-            name: 'Order Management',
-            href: '/order'
-        }
-    ];
-    const hrefRedirect = '/order/zglaszanie_naczep_sb';
+    const hrefRedirect = '/order';
     // const currentDate = ''+new Date().getFullYear()+(new Date().getMonth()+1)+new Date().getDate()+'_'+new Date().getHours()+new Date().getMinutes()+new Date().getSeconds()+'_';
-    // const pathName = 'problems_with_sb';
+    // const pathName = 'zwroty';
     let attachmentsFilesSharp = [];
 
     if (req.files) {
@@ -37,6 +32,7 @@ const sendMailSBCanNotLoad = async (req, res) => {
                 // element.mv(`public/drive/${pathName}/${currentDate}${element.name}`);
             });        
         } else {
+            // req.files.file.mv(`public/drive/${pathName}/${currentDate}${req.files.file.name}`);
             req.files.file.mv(`public/drive/sharp/${req.files.file.name}`);
             attachmentsFilesSharp.push({
                 filename: req.files.file.name,
@@ -45,7 +41,6 @@ const sendMailSBCanNotLoad = async (req, res) => {
         }
     }
 
-
     let conn;
     let passwordOutlook;
     let userOutlook;
@@ -53,9 +48,7 @@ const sendMailSBCanNotLoad = async (req, res) => {
     let pass = '';
     let email = '';
     let links;
-    let cotTrailer;
-    let cotSB;
-
+    
 
     try {
         conn = await poolUser.getConnection();
@@ -67,7 +60,7 @@ const sendMailSBCanNotLoad = async (req, res) => {
         if (!passOut.length === 0) {
             passwordOutlook = CryptoJS.enc.Base64.parse(passOut[0].pass_out).toString(CryptoJS.enc.Utf8);
         }
-    
+
         userOutlook = `${userOut[0].first_name} ${userOut[0].last_name}`;
 
         if (conn) conn.end();
@@ -78,33 +71,15 @@ const sendMailSBCanNotLoad = async (req, res) => {
     try {
         conn = await pool.getConnection();
 
-        if (checkbox61 === 'checked') {
-            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', 'Dirty SB', 0, user]); 
-        }
-
-        if (checkbox62 === 'checked') {
-            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', 'SB leaks', 0, user]); 
-        }
-
-        if (checkbox63 === 'checked') {
-            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', 'SB damaged', 0, user]); 
-        }
-
-        if (text60) {
-            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', text60, 0, user]); 
-        }
-
-        const selectTo = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and cot = ? and param = 'to'", [app_name, cot]);
-        const selectCc = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and cot = ? and param = 'cc'", [app_name, cot]);
+        const selectTo = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'to'", [app_name]);
+        const selectCc = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'cc'", [app_name]);
 
         links = await conn.query("SELECT app_name, href, img FROM apps WHERE app_type = 'link' order by priority");
-        cotTrailer = await conn.query("SELECT DISTINCT cot FROM list_of_cot WHERE sb='trailer'");
-        cotSB = await conn.query("SELECT DISTINCT cot FROM list_of_cot WHERE sb='container'");
 
         let to = [];
             cc = [];
             
-        const subject = `Container ${trailer} can't be loaded`;
+        const subject = `Boxy ${number}`;
 
         for (i=0; i<selectCc.length; i++) {
             cc.push(selectCc[i].value)
@@ -143,7 +118,7 @@ const sendMailSBCanNotLoad = async (req, res) => {
             viewPath: path.resolve('./views/mails'),
             extName: ".handlebars",
         }));
-        
+
         // if (req.files) {
         //     if (req.files.file.length > 1) {
         //         req.files.file.forEach(element => {
@@ -175,25 +150,21 @@ const sendMailSBCanNotLoad = async (req, res) => {
         //             });
         //     }
         // }
-
         
         let mailOptions = {
-            priority: 'high',
+            priority: 'normal',
             from: user,
             to: to,
             cc: cc,
             subject: subject,
-            template: 'sb_can_not_load',
+            template: app_name,
             context: {
-                date: date,
-                trailer: trailer,
-                text60: text60,
-                checkbox61: checkbox61,
-                checkbox62: checkbox62,
-                checkbox63: checkbox63,
                 user: userOutlook,
                 hrefRedirect: hrefRedirect,
-                email: user
+                email: user,
+                number: number,
+                location: location,
+                commentBOXY: commentBOXY
             },
             attachments: attachmentsFilesSharp
         };
@@ -207,7 +178,7 @@ const sendMailSBCanNotLoad = async (req, res) => {
                 })
             });
             const errorInfo = error;
-            res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, errorInfo, hrefRedirect, footerDepartName});
+            res.render('order', {title, pageHeader, links, errorInfo, hrefRedirect, footerDepartName});
             } else {
             console.log('Email sent ---> ' + info.response);
             attachmentsFilesSharp.forEach(element => {
@@ -216,7 +187,7 @@ const sendMailSBCanNotLoad = async (req, res) => {
                 })
             });
             const successInfo = true;
-            res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, successInfo, hrefRedirect, footerDepartName});
+            res.render('order', {title, pageHeader, links, successInfo, hrefRedirect, footerDepartName});
             }
         });
 
@@ -228,8 +199,8 @@ const sendMailSBCanNotLoad = async (req, res) => {
             })
         });
         const errorInfo = error;
-        res.render('zglaszanie_naczep_sb', {title, pageHeader, breadcrumbs, links, cotTrailer, cotSB, errorInfo, hrefRedirect, footerDepartName});
+        res.render('order', {title, pageHeader, errorInfo, hrefRedirect, footerDepartName, links});
     }
 }
 
-module.exports = sendMailSBCanNotLoad;
+module.exports = sendMailBoxy;

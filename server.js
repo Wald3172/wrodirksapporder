@@ -30,19 +30,33 @@ app.use((req, res) => {
 // auto sending
 const DTRSchanges = require('./controllers/apps/DTRSchanges');
 const DTRSchangesAllDay = require('./controllers/apps/DTRSchangesAllDay');
-const DTRSBoxesStatus = require('./controllers/apps/DTRSBoxesStatus');
+const sendBacklogReportDay = require('./controllers/apps/sendBacklogReportDay');
+const sendBacklogReportWeek = require('./controllers/apps/sendBacklogReportWeek');
+const sendBacklogReportMonth = require('./controllers/apps/sendBacklogReportMonth');
 
 function checkTimeAndExecute() {
-    const now = new Date();
+    const today  = new Date();
     const hours = now.getHours();
     if (hours >= 2 && hours < 3) {
         DTRSchangesAllDay();
+        sendBacklogReportDay();
+        if (today .getDay() === 1) {
+            sendBacklogReportWeek();
+        }
+        if (today .getDate() === 1) {
+            sendBacklogReportMonth();
+        }
     }
   }
 setInterval(checkTimeAndExecute, 600000); // 10 min
 setInterval(DTRSchanges, 120000); // 2 min
 
-// DTRSchangesAllDay();
+
+
+// sendBacklogReportMonth();
+
+
+
 // start app
 const startApp = async () => {
     try {

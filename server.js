@@ -36,26 +36,20 @@ const sendBacklogReportMonth = require('./controllers/apps/sendBacklogReportMont
 
 function checkTimeAndExecute() {
     const today  = new Date();
-    const hours = now.getHours();
+    const hours = today.getHours();
     if (hours >= 2 && hours < 3) {
         DTRSchangesAllDay();
         sendBacklogReportDay();
-        if (today .getDay() === 1) {
+        if (today.getDay() === 1) {
             sendBacklogReportWeek();
         }
-        if (today .getDate() === 1) {
+        if (today.getDate() === 1) {
             sendBacklogReportMonth();
         }
     }
   }
 setInterval(checkTimeAndExecute, 600000); // 10 min
 setInterval(DTRSchanges, 120000); // 2 min
-
-
-
-// sendBacklogReportMonth();
-
-
 
 // start app
 const startApp = async () => {

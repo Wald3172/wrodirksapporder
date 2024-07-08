@@ -1,15 +1,11 @@
-function getYesterdayDate(n) {
-    // Получаем текущую дату
+function getNewDate(n) {
+
     const today = new Date();
-  
-    // Вычитаем один день из текущей даты
-    const yesterday = new Date(today);
-    yesterday.setDate(today.getDate() - n);
-  
-    // Форматируем дату в нужный формат "yyyy-mm-dd"
-    const formattedDate = yesterday.toISOString().slice(0, 10);
+    const newDate = new Date(today);
+    newDate.setDate(today.getDate() - n);
+    const formattedDate = newDate.toISOString().slice(0, 10);
   
     return formattedDate;
 }
 
-module.exports = getYesterdayDate;
+module.exports = getNewDate;

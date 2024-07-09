@@ -45,8 +45,8 @@ const sendMailKamagSupport = async (req, res) => {
     try {
         conn = await pool.getConnection();
 
-        const selectTo = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'to'", [app_name]);
-        const selectCc = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'cc'", [app_name]);
+        // const selectTo = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'to'", [app_name]);
+        // const selectCc = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'cc'", [app_name]);
         const selectSubject = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'subject'", [app_name]);
 
         links = await conn.query("SELECT app_name, href, img FROM apps WHERE app_type = 'link' order by priority");
@@ -55,12 +55,12 @@ const sendMailKamagSupport = async (req, res) => {
         let to = [];
             cc = [];
             subject = selectSubject[0].value;
-        for (i=0; i<selectCc.length; i++) {
-            cc.push(selectCc[i].value)
-        }
-        for (i=0; i<selectTo.length; i++) {
-            to.push(selectTo[i].value)
-        }
+        // for (i=0; i<selectCc.length; i++) {
+        //     cc.push(selectCc[i].value)
+        // }
+        // for (i=0; i<selectTo.length; i++) {
+        //     to.push(selectTo[i].value)
+        // }
 
         if (conn) conn.end();
 
@@ -96,8 +96,9 @@ const sendMailKamagSupport = async (req, res) => {
         let mailOptions = {
             priority: 'high',
             from: user,
-            to: to,
-            cc: cc,
+            to: 'vyakovenko@dirks-group.de',
+            // to: to,
+            // cc: cc,
             subject: subject,
             template: typeOfSupport,
             context: {

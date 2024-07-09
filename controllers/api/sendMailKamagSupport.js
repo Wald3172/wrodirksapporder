@@ -30,13 +30,12 @@ const sendMailKamagSupport = async (req, res) => {
         email = await conn.query("SELECT email FROM user WHERE id = ?", [decoded.id]);
         const userOut = await conn.query("SELECT first_name, last_name FROM user WHERE id = ?", [decoded.id]);
         const passOut = await conn.query("SELECT pass_out FROM outlook WHERE user_id = ?", [decoded.id]);
-
-        if (!passOut.length === 0) {
+        
+        if (passOut.length !== 0) {
             passwordOutlook = CryptoJS.enc.Base64.parse(passOut[0].pass_out).toString(CryptoJS.enc.Utf8);
         }
     
         userOutlook = `${userOut[0].first_name} ${userOut[0].last_name}`;
-
         if (conn) conn.end();
     } catch (error) {
         console.log(error);
@@ -67,6 +66,7 @@ const sendMailKamagSupport = async (req, res) => {
         if (passwordOutlook) {
             user = email[0].email;
             pass = passwordOutlook;
+            console.log(`${user} ${pass}`)
         } else {
             user = process.env.NODEMAILER_AUTH_USER;
             pass = process.env.NODEMAILER_AUTH_PASSWORD + '#';

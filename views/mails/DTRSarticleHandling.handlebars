@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <p>Dzień dobry,</p>
+    <p>W DTRS Article Handling wprowadzono następujące zmiany:</p>
+    {{#if articles}}
+    <table style="border-collapse: collapse; border-spacing: 0; border: 1px solid rgb(0, 0, 0)">
+        <tr>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Data i godzina</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Operation and EAN</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Box and qty</th>
+            <th style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">Target box</th>
+        </tr>
+        {{#each articles}}
+        <tr>
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this.dateTime}}</td>
+            {{#each this.message}}
+            <td style="border: 1px solid rgb(0, 0, 0); padding: 4px 8px">{{this}}</td>
+            {{/each}}
+        </tr>
+        {{/each}}
+    {{/if}}
+    </table>
+    <br>
+    <br>
+    <span style="color: rgb(31, 73, 125)">
+        Mail zostal wygenerowany automatycznie
+    </span>  
+</body>
+</html>

@@ -29,6 +29,7 @@ app.use((req, res) => {
 
 // auto sending
 const DTRSchanges = require('./controllers/apps/DTRSchanges');
+const DTRSarticleHandling = require('./controllers/apps/DTRSarticleHandling');
 const DTRSchangesAllDay = require('./controllers/apps/DTRSchangesAllDay');
 const sendBacklogReportDay = require('./controllers/apps/sendBacklogReportDay');
 const sendBacklogReportWeek = require('./controllers/apps/sendBacklogReportWeek');
@@ -50,6 +51,7 @@ function checkTimeAndExecute() {
   }
 setInterval(checkTimeAndExecute, 600000); // 10 min
 setInterval(DTRSchanges, 120000); // 2 min
+setInterval(DTRSarticleHandling, 120000); // 2 min
 
 // start app
 const startApp = async () => {

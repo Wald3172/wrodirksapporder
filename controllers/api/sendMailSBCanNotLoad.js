@@ -11,7 +11,7 @@ const fs = require('fs');
 // const sharp = require('sharp');
 
 const sendMailSBCanNotLoad = async (req, res) => {
-    const { app_name, date, cot, trailer, checkbox61, checkbox62, checkbox63, text60 } = req.body; 
+    const { app_name, date, cot, trailer, checkbox61, checkbox62, checkbox63, text30 } = req.body; 
     const title = 'WRO Dirks App | Zgłaszanie naczep/SB';
     const pageHeader = 'Zgłaszanie naczep/SB';
     const footerDepartName = "Order Management";
@@ -90,8 +90,8 @@ const sendMailSBCanNotLoad = async (req, res) => {
             await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', 'SB damaged', 0, user]); 
         }
 
-        if (text60) {
-            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', text60, 0, user]); 
+        if (text30) {
+            await conn.query("INSERT INTO problems_with_trailer_and_sb (notification_date, cot, number, tdf, reason, number_of_side_boards, user) VALUES (?,?,?,?,?,?,?)", [date, cot, trailer, '', text30, 0, user]); 
         }
 
         const selectTo = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and cot = ? and param = 'to'", [app_name, cot]);
@@ -187,7 +187,7 @@ const sendMailSBCanNotLoad = async (req, res) => {
             context: {
                 date: date,
                 trailer: trailer,
-                text60: text60,
+                text30: text30,
                 checkbox61: checkbox61,
                 checkbox62: checkbox62,
                 checkbox63: checkbox63,

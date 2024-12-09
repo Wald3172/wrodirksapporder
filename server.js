@@ -49,6 +49,7 @@ function checkTimeAndExecute() {
         }
     }
   }
+
 setInterval(checkTimeAndExecute, 600000); // 10 min
 setInterval(DTRSchanges, 120000); // 2 min
 setInterval(DTRSarticleHandling, 120000); // 2 min

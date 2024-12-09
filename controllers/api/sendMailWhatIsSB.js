@@ -71,22 +71,11 @@ const sendMailWhatIsSB = async (req, res) => {
         try {
             conn = await pool.getConnection();
     
-            const selectToHER = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'to' and cot = 'HER'", [app_name]);
-            const selectCcHER = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'cc' and cot = 'HER'", [app_name]);
             const selectToDHL = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'to' and cot = 'DHL_DE'", [app_name]);
             const selectCcDHL = await conn.query("SELECT value FROM mail_param WHERE app_name = ? and param = 'cc' and cot = 'DHL_DE'", [app_name]);
     
             links = await conn.query("SELECT app_name, href, img FROM apps WHERE app_type = 'link' order by priority");
-    
-            let toHER = [];
-                ccHER = [];
-    
-            for (i=0; i<selectCcHER.length; i++) {
-                ccHER.push(selectCcHER[i].value)
-            }
-            for (i=0; i<selectToHER.length; i++) {
-                toHER.push(selectToHER[i].value)
-            }
+
 
             let toDHL = [];
                 ccDHL = [];
@@ -184,43 +173,6 @@ const sendMailWhatIsSB = async (req, res) => {
                 res.render('order', {title, pageHeader, links, errorInfo, hrefRedirect, footerDepartName});
                 } else {
                 console.log('Email sent ---> ' + info.response);
-
-                mailOptions = {
-                    priority: 'high',
-                    from: user,
-                    to: toHER,
-                    cc: ccHER,
-                    subject: `The container ${numberOfSB} is Hermes?`,
-                    template: app_name,
-                    context: {
-                        user: userOutlook,
-                        hrefRedirect: hrefRedirect,
-                        email: user,
-                        numberOfSB: numberOfSB
-                    },
-                    attachments: attachmentsFilesSharp
-                };
-                transporter.sendMail(mailOptions, (error, info) => {
-                    if (error) {
-                    console.log('Email error ---> ' + error);
-                    attachmentsFilesSharp.forEach(element => {
-                        fs.unlink(element.path, err => {
-                            if (err) throw err;
-                        })
-                    });
-                    const errorInfo = error;
-                    res.render('order', {title, pageHeader, links, errorInfo, hrefRedirect, footerDepartName});
-                    } else {
-                    console.log('Email sent ---> ' + info.response);
-                    attachmentsFilesSharp.forEach(element => {
-                        fs.unlink(element.path, err => {
-                            if (err) throw err;
-                        })
-                    });
-                    const successInfo = true;
-                    res.render('order', {title, pageHeader, links, successInfo, hrefRedirect, footerDepartName});
-                    }
-                });
                 }
             });
     

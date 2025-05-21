@@ -19,7 +19,7 @@ const DTRSchanges = async() => {
         const timestampStart = lastDateAndTime[0].myValue.replace(' ', '%20');
         const timestampEnd = `${year}-${month}-${day}%2023:59:59`;
         
-        const url = `http://dg150ap03:8080/DTClone/logs?level=INFO&from=${timestampStart}&to=${timestampEnd}&ref=boxes`;
+        const url = `http://dg150ap03:8080/DTClone/rest/logs?level=INFO&from=${timestampStart}&to=${timestampEnd}&ref=boxes`;
 
         fetchData(url).then(data => {
             if (data.length !== 0) {

@@ -26,7 +26,7 @@ const DTRSchangesAllDay = async() => {
             const timestampStart = `${yearStart}-${monthStart}-${dayStart}%2000:00:00`;
             const timestampEnd = `${yearEnd}-${monthEnd}-${dayEnd}%2002:59:59`;
     
-            const url = `http://dg150ap03:8080/DTClone/logs?level=INFO&from=${timestampStart}&to=${timestampEnd}&ref=boxes`;
+            const url = `http://dg150ap03:8080/DTClone/rest/logs?level=INFO&from=${timestampStart}&to=${timestampEnd}&ref=boxes`;
 
             fetchData(url).then(data => {
                 if (data.length !== 0) {

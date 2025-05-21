@@ -7,7 +7,7 @@ const moment = require('moment-timezone');
 const getNewDate = require('../helpers/getNewDate');
 const path = require('path');
 const reportDate = getNewDate(1);
-const reportDateStart = getNewDate(7);
+const reportDateStart = getNewDate(127);
 
 const sendBacklogReportWeek = async() => {
 
